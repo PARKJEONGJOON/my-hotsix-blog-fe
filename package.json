@@ -14,7 +14,6 @@
     "@types/react-router-dom": "^5.3.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-router-dom": "^6.24.1",
     "react-scripts": "5.0.1",
     "typescript": "^4.9.5",
     "web-vitals": "^4.1.1"
@@ -58,6 +57,7 @@
     "eslint-plugin-react": "^7.34.3",
     "globals": "^15.6.0",
     "prettier": "^3.3.2",
+    "react-router-dom": "^6.24.1",
     "typescript-eslint": "^7.13.1"
   }
 }
