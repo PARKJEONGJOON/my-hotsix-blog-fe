@@ -171,9 +171,6 @@ function Profile() {
           <PasswordEditButton to="/passwordedit">
             비밀번호 변경하러 가기
           </PasswordEditButton>
-          <PasswordEditButton to="/passwordedit">
-            ID(이메일) 변경하러 가기
-          </PasswordEditButton>
         </IntroduceColumn>
       </ProfileSection>
       <EditSectionsContainer>
@@ -325,11 +322,11 @@ const IntroduceBox = styled.div`
   font-style: normal;
   font-weight: 400;
   font-family: 'MangoDdobak';
-  font-size: 13px;
+  font-size: 14px;
   line-height: 20px;
   box-sizing: border-box;
   width: 400px;
-  height: 60px;
+  height: 100px;
   align-items: center;
   justify-content: center;
   display: flex;
@@ -340,7 +337,7 @@ const IntroduceBox = styled.div`
 const EditIntroduceBox = styled.div`
   box-sizing: border-box;
   width: 400px;
-  height: 60px;
+  height: 100px;
   align-items: center;
   justify-content: center;
   display: flex;
@@ -350,13 +347,13 @@ const EditIntroduceBox = styled.div`
 `;
 const IntroduceTextarea = styled.textarea`
   width: 380px;
-  height: 50px;
+  height: 80px;
   border: 1px solid #ffffff;
   border-radius: 4px;
   padding: 10px;
   font-family: 'MangoDdobak';
   font-weight: 400;
-  font-size: 13px;
+  font-size: 14px;
   line-height: 18px;
   overflow: hidden;
   resize: none;

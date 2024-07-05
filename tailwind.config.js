@@ -1,5 +1,5 @@
 module.exports = {
-  content: ["./src/**/*.{html,js,jsx,ts,tsx}"],  
+  content: ['./src/**/*.{html,js,jsx,ts,tsx}'],
   theme: {
     extend: {
       colors: {
@@ -10,13 +10,13 @@ module.exports = {
         signupInput: '25rem',
       },
       maxWidth: {
-        'pc': '1440px',
-        'mobile': '767px',
+        pc: '1440px',
+        mobile: '767px',
       },
       fontFamily: {
-        'sans': ['MangoDdobak', 'Arial', 'sans-serif'],
+        sans: ['MangoDdobak', 'Arial', 'sans-serif'],
       },
     },
   },
   plugins: [],
-}
+};

@@ -9,6 +9,7 @@ import Header from './components/header/Header';
 import Profile from './pages/Profile/Profile';
 import PasswordEdit from './pages/PasswordEdit/PasswordEdit';
 import Editor from './components/post/Eidtor';
+import EmailEdit from './pages/EmailEdit/EmailEdit';
 
 const queryClient = new QueryClient();
 
@@ -24,6 +25,7 @@ const App: React.FC = () => (
         <Route path="/passwordedit" element={<PasswordEdit />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/post" element={<Editor />} />
+        <Route path="/emailedit" element={<EmailEdit />} />
       </Routes>
       <Toast />
     </Router>
