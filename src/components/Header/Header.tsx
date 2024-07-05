@@ -7,7 +7,7 @@ type Props = {
 
 const Header = ({userName = 'Hotsix'}: Props) => {
     return(
-        <header className="w-full h-32.5 px-52 py-2 border-solid border-b-2 border-skyblue flex justify-between items-center">
+        <header className="w-full px-52 py-2 border-b-2 border-skyblue shadow flex justify-between items-center">
             <div className="text-large">
                <Link to="/">{userName}'s Blog</Link> 
             </div>
