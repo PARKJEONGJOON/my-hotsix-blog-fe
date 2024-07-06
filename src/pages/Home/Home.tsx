@@ -1,14 +1,7 @@
-import Header from "../../components/Header/Header";
-import SideUser from "../../components/Home/SideUser";
+// 메인 페이지
 
-const Home = () => {
-    return (
-        <div>
-            <Header />
-            <SideUser />
-        </div>
-        
-    )
+function home() {
+
 }
 
-export default Home;
+export default home;
