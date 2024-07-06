@@ -9,7 +9,7 @@ const queryClient = new QueryClient();
 const App: React.FC = () =>{
   return (
     <QueryClientProvider client={queryClient}>
-      <Router>
+        <Router>
         <Routes>
           <Route path='/' element={<Login />} />
           <Route path="/login" element={<Login />} />

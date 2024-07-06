@@ -2,15 +2,36 @@ import React, { useState } from 'react';
 import InputField from './../../components/signup/SignupInput'
 import useInput from './../../hooks/useInput';
 import { useNavigate } from 'react-router-dom';
+import { useMutation, UseMutationResult } from '@tanstack/react-query';
+import { register, RegisterData } from '../../api/auth';
 
 const Signup: React.FC = () => {
     const navigate = useNavigate();
     const [submitted, setSubmitted] = useState(false);
 
-    const idInput = useInput({
+    const mutation: UseMutationResult<any, Error, RegisterData> = useMutation<any, Error, RegisterData>({
+        mutationFn: register,
+        onSuccess: () => {
+          alert('회원가입 성공');
+          navigate('/login');
+        },
+        onError: (error: Error) => {
+          console.log(error);
+          alert('회원가입 실패');
+        },
+    });
+
+    const emailInput = useInput({
         initialValue: '',
-        validationFn: (value: string) =>
-            !value.includes('@') ? '올바른 이메일 주소를 입력해주세요.' : undefined,
+        validationFn: (value) => {
+          if (!value.trim()) {
+            return '이메일을 입력해주세요.';
+          }
+          if (!/\S+@\S+\.\S+/.test(value)) {
+            return '올바른 이메일 형식을 입력해주세요.';
+          }
+          return undefined;
+        }
     });
 
     const nameInput = useInput({
@@ -22,7 +43,7 @@ const Signup: React.FC = () => {
     const passwordInput = useInput({
         initialValue: '',
         validationFn: (value: string) =>
-            value.length < 6 ? '비밀번호는 최소 6자 이상이어야 합니다.' : undefined,
+            value.length < 8 ? '비밀번호는 최소 8자 이상이어야 합니다.' : undefined,
     });
     
     const confirmPasswordInput = useInput({
@@ -36,25 +57,26 @@ const Signup: React.FC = () => {
         validationFn: () => undefined,
     });
 
-    const introductionInput = useInput({
+    const introduceInput = useInput({
         initialValue: '',
         validationFn: () => undefined,
     });
 
-    const handleSignUp = () => {
+    const handleSignUp = (e: React.FormEvent) => {
+        e.preventDefault();
         setSubmitted(true);
 
-        idInput.validate();
+        emailInput.validate();
         nameInput.validate();
         passwordInput.validate();
         confirmPasswordInput.validate();
 
         if (
-            !idInput.value ||
+            !emailInput.value ||
             !nameInput.value ||
             !passwordInput.value ||
             !confirmPasswordInput.value ||
-            idInput.error ||
+            emailInput.error ||
             nameInput.error ||
             passwordInput.error ||
             confirmPasswordInput.error
@@ -62,8 +84,13 @@ const Signup: React.FC = () => {
             console.log('회원가입 에러');
             return;
         }
-        
-        navigate('/login');
+        mutation.mutate({
+            email: emailInput.value,
+            password: passwordInput.value,
+            name: nameInput.value,
+            github: githubInput.value,
+            introduce: introduceInput.value
+        });
     };
 
     return (
@@ -76,17 +103,23 @@ const Signup: React.FC = () => {
                 <InputField
                     title="ID *"
                     type="text"
-                    value={idInput.value}
-                    onChange={idInput.handleChange}
+                    value={emailInput.value}
+                    onChange={(e) => {
+                        emailInput.handleChange(e.target.value);
+                        if (submitted) emailInput.validate();
+                    }}
                     placeholder="이메일 형식의 아이디를 입력해주세요"
-                    error={submitted && idInput.error}
+                    error={submitted && emailInput.error}
                 />
 
                 <InputField
                     title="비밀번호 *"
                     type="password"
                     value={passwordInput.value}
-                    onChange={passwordInput.handleChange}
+                    onChange={(e) => {
+                        passwordInput.handleChange(e.target.value);
+                        if (submitted) passwordInput.validate();
+                    }}
                     placeholder="비밀번호를 입력해주세요"
                     error={submitted && passwordInput.error}
                 />
@@ -95,7 +128,10 @@ const Signup: React.FC = () => {
                     title="비밀번호 확인 *"
                     type="password"
                     value={confirmPasswordInput.value}
-                    onChange={confirmPasswordInput.handleChange}
+                    onChange={(e) => {
+                        confirmPasswordInput.handleChange(e.target.value);
+                        if (submitted) confirmPasswordInput.validate();
+                    }}
                     placeholder="비밀번호 확인"
                     error={submitted && confirmPasswordInput.error}
                 />
@@ -104,7 +140,10 @@ const Signup: React.FC = () => {
                     title="이름(닉네임) *"
                     type="text"
                     value={nameInput.value}
-                    onChange={nameInput.handleChange}
+                    onChange={(e) => {
+                        nameInput.handleChange(e.target.value);
+                        if (submitted) nameInput.validate();
+                    }}
                     placeholder="이름을 입력해주세요"
                     error={submitted && nameInput.error}
                 />
@@ -113,15 +152,15 @@ const Signup: React.FC = () => {
                     title="Github (선택)"
                     type="text"
                     value={githubInput.value}
-                    onChange={githubInput.handleChange}
+                    onChange={(e) => githubInput.handleChange(e.target.value)}
                     placeholder="Github URL을 입력해주세요"
                 />
 
                 <InputField
                     title="Introduce (선택)"
                     type="text"
-                    value={introductionInput.value}
-                    onChange={introductionInput.handleChange}
+                    value={introduceInput.value}
+                    onChange={(e) => introduceInput.handleChange(e.target.value)}
                     placeholder="한 줄 소개를 자유롭게 입력해주세요"
                 />
 

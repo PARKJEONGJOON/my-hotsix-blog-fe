@@ -2,7 +2,7 @@ import React from 'react';
 
 interface LoginButtonProps {
   text: string;
-  onClick?: () => void;
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 const LoginButton: React.FC<LoginButtonProps> = ({ text, onClick }) => {
