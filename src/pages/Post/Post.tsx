@@ -1,11 +1,7 @@
 // 글 작성
 
-function Post() {
-    return(
-        <div>
-            <p>글 작성</p>
-        </div>
-    )
+function post() {
+
 }
 
-export default Post;
+export default post;
