@@ -15,3 +15,18 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+@font-face {
+  font-family: 'MangoBold';
+  src: url('../src/assets/fonts/MangoDdobak-B\(ttf\).ttf');
+}
+
+@font-face {
+  font-family: 'MangoRegular';
+  src: url('../src/assets/fonts/MangoDdobak-R\(ttf\).ttf');
+}
+
+@font-face {
+  font-family: 'MangoLight';
+  src: url('../src/assets/fonts/MangoDdobak-L\(ttf\).ttf');
+}
