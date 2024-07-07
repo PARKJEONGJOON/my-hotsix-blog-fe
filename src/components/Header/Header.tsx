@@ -7,7 +7,7 @@ interface Props {
 
 const Header = ({ userName = 'Hotsix' }: Props) => {
   return (
-    <header className="w-full px-20 py-2 border-b-2 border-skyblue shadow flex justify-between items-center">
+    <header className="w-full px-20 py-2 border-b-2 border-skyblue shadow flex justify-between items-center p-10">
       <div className="text-large text-darkblue font-MangoBold">
         <Link to="/">{userName}'s Blog</Link>
       </div>
