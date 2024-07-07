@@ -5,9 +5,12 @@ module.exports = {
       colors: {
         darkblue: '#001354',
         skyblue: '#D4E8FF',
+        gray: '#BEBEBE',
       },
       width: {
         signupInput: '25rem',
+        '250': '62.5rem',
+        '186': '46.25rem'
       },
       maxWidth: {
         pc: '1440px',
@@ -20,9 +23,9 @@ module.exports = {
         MangoLight: ['MangoLight'],
       },
       fontSize: {
-        large: '46px',
-        regular: '24px',
-        small: '18px',
+        large: '2.875rem',
+        regular: '1.5rem',
+        small: '1.125rem',
       },
     },
   },
