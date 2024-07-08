@@ -1,20 +1,25 @@
-import thumb from '../../assets/images/thumb.svg'
 import { TiHeartOutline } from "react-icons/ti";
 
-const Post = () => {
+interface PostProps {
+    title: string;
+    content: string;
+    thumbSrc?: string;
+}
+
+const Post = ({title, content, thumbSrc}: PostProps) => {
     return(
         <div className="w-250 h-40 border-solid border-2 border-gray rounded-2xl flex flex-row px-8 py-4 space-x-12">
             <div className="w-186">
                 <div className='flex flex-row items-center justify-between'>
-                    <p className="text-regular font-MangoBold mb-2">포스팅 제목</p>
+                    <p className="text-regular font-MangoBold mb-2 text-ellipsis overflow-hidden line-clamp-1">{title}</p>
                     <div className='flex flex-row'>
                         <TiHeartOutline className='w-6 h-6' />
                         <p className='text-samll font-MangoRegular ml-1'>123</p>
                     </div>
                 </div>
-                <p className="text-small font-MangoRegular text-ellipsis overflow-hidden line-clamp-3">포스팅 내용 텍스트 보여주는 자리 포스팅 내용 텍스트 보여주는 자리 포스팅 내용 텍스트 보여주는 자리 포스팅 내용 텍스트 보여주는 자리 포스팅 내용 텍스트 보여주는 자리 포스팅 내용 텍스트 보여주는 자리 포스팅 내용 텍스트 보여주는 자리 포스팅 내용 텍스트 보여주는 자리 포스팅 내용 텍스트 보여주는 자리 포스팅 내용 텍스트 보여주는 자리 포스팅 내용 텍스트 보여주는 자리 </p>
+                <p className="text-small font-MangoRegular text-ellipsis overflow-hidden line-clamp-3">{content}</p>
             </div>
-            <img src={thumb} alt="임시 썸네일 이미지" className='w-32 h-32 rounded-md' />
+            {thumbSrc ? (<img src={thumbSrc} alt="썸네일 이미지" className='w-32 h-32 rounded-md' />) : <></>}
         </div>
     )
 }
