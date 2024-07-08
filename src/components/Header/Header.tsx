@@ -2,6 +2,7 @@ import userIcon from '../../assets/images/user.svg';
 import { Link } from 'react-router-dom';
 
 interface Props {
+  // user정보 받아오게 되면 optional 해젠
   userName?: string;
 }
 

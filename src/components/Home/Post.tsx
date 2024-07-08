@@ -19,7 +19,7 @@ const Post = ({title, content, thumbSrc}: PostProps) => {
                 </div>
                 <p className="text-small font-MangoRegular text-ellipsis overflow-hidden line-clamp-3">{content}</p>
             </div>
-            {thumbSrc ? (<img src={thumbSrc} alt="썸네일 이미지" className='w-32 h-32 rounded-md' />) : <></>}
+            {thumbSrc ? (<img src={thumbSrc} alt="썸네일 이미지(있으면 보여주기)" className='w-32 h-32 rounded-md' />) : <></>}
         </div>
     )
 }

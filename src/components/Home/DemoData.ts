@@ -1,3 +1,4 @@
+// 더미 데이터
 type DemoData = {
     id: number;
     title: string; 
