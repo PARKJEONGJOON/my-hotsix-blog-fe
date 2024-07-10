@@ -2,6 +2,10 @@ module.exports = {
   content: ['./src/**/*.{html,js,jsx,ts,tsx}'],
   theme: {
     extend: {
+      border: {
+        darkblue: '#001354',
+        skyblue: '#D4E8FF',
+      },
       colors: {
         darkblue: '#001354',
         skyblue: '#D4E8FF',

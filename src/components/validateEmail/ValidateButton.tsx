@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import cheack from '../../assets/image/cheack.png';
+import cheack from '../../assets/images/cheack.png';
 interface ValidateButtonProps {
   text?: string;
   showbutton: boolean;

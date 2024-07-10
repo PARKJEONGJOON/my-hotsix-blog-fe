@@ -1,14 +1,13 @@
 import { AxiosError } from 'axios';
-import defaultProfile from '../../assets/image/defaultProfile.png';
+import defaultProfile from '../../assets/images/defaultProfile.png';
 import { ChangeEvent, RefObject, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { fetchUserProfile, updateUserProfile } from '../../api/userAPI';
 import { UserData } from '../../types/UserData';
-import EditableInputField from '../../components/profile/EditTableInput';
-import DisplayField from '../../components/profile/DisplayField';
+import EditableInputField from '../../components/Profile/EditTableInput';
+import DisplayField from '../../components/Profile/DisplayField';
 
 interface EditToggle {
   userName: boolean;

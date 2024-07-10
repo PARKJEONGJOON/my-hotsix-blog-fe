@@ -1,10 +1,10 @@
 import React from 'react';
 import '../../index.css';
-import ButtonComponent from '../../components/login/LoginButton';
-import LoginInputForm from '../../components/login/LoginInputForm';
+import ButtonComponent from '../../components/Login/LoginButton';
+import LoginInputForm from '../../components/Login/LoginInputForm';
 import { useNavigate } from 'react-router-dom';
 import useInput from '../../hooks/useInput';
-import EmailInputField from '../../components/validateEmail/EmailInputField';
+import EmailInputField from '../../components/ValidateEmail/EmailInputField';
 
 const EmailEdit: React.FC = () => {
   return (
