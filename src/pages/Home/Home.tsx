@@ -1,5 +1,5 @@
 import Header from "../../components/Header/Header";
-import SideUser from "../../components/Home/SideUser";
+import SideUser from "../../components/home/SideUser";
 
 const Home = () => {
     return (
