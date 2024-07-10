@@ -35,7 +35,6 @@ module.exports = {
         large: '2.875rem',
         regular: '1.5rem',
         small: '1.125rem',
-
       },
     },
   },

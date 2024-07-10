@@ -1,4 +1,3 @@
-
 import Header from "../../components/Header/Header";
 import PostList from "../../components/Home/PostList";
 import SideUser from "../../components/Home/SideUser";
@@ -17,4 +16,3 @@ const Home = () => {
 }
 
 export default Home;
-
