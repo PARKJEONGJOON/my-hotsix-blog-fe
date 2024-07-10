@@ -1,5 +1,6 @@
 // 글 작성
 
+
 import Editor from '../../components/Post/Eidtor';
 import PrivateButton from '../../components/Post/PrivateButton';
 
