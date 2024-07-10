@@ -1,11 +1,18 @@
-import React from "react";
+import Header from "../../components/Header/Header";
+import PostList from "../../components/Home/PostList";
+import SideUser from "../../components/Home/SideUser";
 
-const Home: React.FC = () => {
-    return(
+const Home = () => {
+    return (
         <div>
-            <h1>메인페이지</h1>
+            <Header />
+            <div className="flex flex-row justify-between px-44">
+                <SideUser />
+                <PostList />
+            </div>
         </div>
-    );
+        
+    )
 }
 
 export default Home;

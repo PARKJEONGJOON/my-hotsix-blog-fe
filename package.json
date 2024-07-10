@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@tanstack/react-query": "^5.50.1",
-    "@tanstack/react-query-devtools": "^5.50.1",
+    "@tanstack/react-query": "^5.49.2",
+    "@tanstack/react-query-devtools": "^5.49.2",
     "@testing-library/jest-dom": "^6.4.6",
     "@testing-library/react": "^16.0.0",
     "@testing-library/user-event": "^14.5.2",
@@ -13,11 +13,18 @@
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@types/react-router-dom": "^5.3.3",
+    "@xeger/quill-image-actions": "^0.7.2",
+    "@xeger/quill-image-formats": "^0.7.2",
     "axios": "^1.7.2",
+    "firebase": "^10.12.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-quill": "^2.0.0",
     "react-router-dom": "^6.23.1",
+    "react-icons": "^5.2.1",
     "react-scripts": "5.0.1",
+    "react-toastify": "^10.0.5",
+    "styled-components": "^6.1.11",
     "typescript": "^4.9.5",
     "web-vitals": "^4.1.1"
   },
@@ -66,7 +73,5 @@
     "tailwindcss": "^3.4.4",
     "typescript-eslint": "^7.13.1"
   },
-  "exports": {
-    "./build/lib/devtools": "./build/lib/devtools"
   }
 }
