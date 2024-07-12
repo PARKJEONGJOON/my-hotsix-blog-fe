@@ -8,6 +8,7 @@ import Profile from './pages/Profile/Profile';
 import PasswordEdit from './pages/PasswordEdit/PasswordEdit';
 import EmailEdit from './pages/EmailEdit/EmailEdit';
 import Post from './pages/Post/Post';
+import Home from './pages/Home/Home';
 
 const queryClient = new QueryClient();
 
@@ -16,7 +17,7 @@ const App: React.FC = () => (
     <Router>
       <ReactQueryDevtools />
       <Routes>
-        <Route path="/" element={<Login />} />
+        <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/passwordedit" element={<PasswordEdit />} />
