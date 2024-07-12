@@ -9,7 +9,7 @@ interface InputFieldProps {
   onclick: () => void;
   onchange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   sort?: string;
-}
+};
 
 const EmailInputField: React.FC<InputFieldProps> = ({
   title,

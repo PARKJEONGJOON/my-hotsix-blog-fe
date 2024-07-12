@@ -25,6 +25,6 @@ const InputField: React.FC<InputFieldProps> = ({ title, type, value, onChange, p
       />
     </div>
   );
-}
+};
 
 export default InputField;

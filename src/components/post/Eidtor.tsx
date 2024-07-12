@@ -97,5 +97,5 @@ function Editor() {
       />
     </div>
   );
-}
+};
 export default Editor;

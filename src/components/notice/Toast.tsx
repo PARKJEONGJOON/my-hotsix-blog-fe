@@ -41,5 +41,5 @@ function Toast() {
       transition={Slide}
     />
   );
-}
+};
 export default Toast;
