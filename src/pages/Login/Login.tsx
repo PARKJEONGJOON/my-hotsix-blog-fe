@@ -65,7 +65,7 @@ const Login: React.FC = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen my-4">
       <div className="text-darkblue text-center mb-4">
-        <h1 className="text-3xl font-bold mb-6">Login</h1>
+        <h1 className="text-3xl bold mb-6">Login</h1>
         <h1 className="text-lg">안녕하세요!</h1>
         <h1 className="text-lg">블로그 이용을 위해 로그인/회원가입을 해주세요 :)</h1>
       </div>

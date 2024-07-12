@@ -2,7 +2,6 @@ module.exports = {
   content: ['./src/**/*.{html,js,jsx,ts,tsx}'],
   theme: {
     extend: {
-
       border: {
         darkblue: '#001354',
         skyblue: '#D4E8FF',
@@ -14,22 +13,17 @@ module.exports = {
       },
       width: {
         signupInput: '25rem',
-
-        signupInput: '25rem',
         '250': '62.5rem',
         '186': '46.25rem'
-
       },
       maxWidth: {
         pc: '1440px',
         mobile: '767px',
       },
       fontFamily: {
-
-        sans: ['MangoRegular', 'Arial', 'sans-serif'],
-        MangoBold: ['MangoBold'],
-        MangoRegular: ['MangoRegular'],
-        MangoLight: ['MangoLight'],
+        sans: ['MangoRegular', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', 'sans-serif'],
+        bold: ['MangoBold', 'Arial', 'sans-serif'],
+        light: ['MangoLight', 'Arial', 'sans-serif'],
       },
       fontSize: {
         large: '2.875rem',
