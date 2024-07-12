@@ -1,5 +1,4 @@
 import { ChangeEvent, useState } from 'react';
-import { styled } from 'styled-components';
 import { notify } from '../../components/Notice/Toast';
 import EmailInputField from '../../components/ValidateEmail/EmailInputField';
 import Timer from '../../components/ValidateEmail/Timer';
@@ -25,7 +24,7 @@ function PasswordEdit() {
       notify({ type: 'error', text: '비밀번호를 확인해주세요' });
     }
   };
-  const handleEmailvalidate = () => {};
+  //const handleEmailvalidate = () => {};
   return (
     <div className="flex flex-col items-center justify-center min-h-screen overflow-hidden">
       <h1 className="text-3xl font-bold mb-6 text-darkblue">

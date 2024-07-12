@@ -7,7 +7,7 @@ const PrivateButton = () => {
     setIsPrivate(value);
   };
 
-  return isPrivate == 'private' ? (
+  return isPrivate === 'private' ? (
     <div className="mt-20 ml-3 flex flex-row">
       <button
         className="w-28 h-8  border-gray-200 border-2 mb-2 rounded-sm font-thin text-gray-400"
@@ -22,7 +22,7 @@ const PrivateButton = () => {
         비공개
       </button>
     </div>
-  ) : isPrivate == 'default' ? (
+  ) : isPrivate === 'default' ? (
     <div className="mt-20 ml-3 flex flex-row">
       <button
         className="w-28 h-8  border-gray-200 border-2 mb-2 rounded-sm font-thin text-gray-400"

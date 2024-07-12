@@ -448,21 +448,6 @@ const PasswordEditButton = styled(Link)`
   }
   color: #001354;
 `;
-const EditButton = styled.button`
-  box-sizing: border-box;
-  width: 50px;
-  height: 30px;
-  background: #001354;
-  border: 1px solid #ffffff;
-  border-radius: 5px;
-  font-family: 'MangoDdobak';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 13px;
-  line-height: 20px;
-  color: #ffffff;
-  margin-left: 45px;
-`;
 
 const SaveButton = styled.button`
   box-sizing: border-box;

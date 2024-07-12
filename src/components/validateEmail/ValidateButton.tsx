@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import cheack from '../../assets/images/cheack.png';
 interface ValidateButtonProps {
   text?: string;
@@ -15,11 +14,11 @@ const ValidateButton: React.FC<ValidateButtonProps> = ({
   sort,
 }) => {
   return showbutton ? (
-    sort == 'cheack' ? (
+    sort === 'cheack' ? (
       <div>
-        <img src={cheack} className="w-6 h-6" />
+        <img src={cheack} className="w-6 h-6" alt="" />
       </div>
-    ) : sort == 'sended' ? (
+    ) : sort === 'sended' ? (
       <div>
         <div className="box-border p-2 h-7 bg-gray-400 border-white font-sans text-xs text-white mx-1 whitespace-nowrap rounded">
           {text}
