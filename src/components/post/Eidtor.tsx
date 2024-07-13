@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import ReactQuill, { Quill } from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { ImageActions } from '@xeger/quill-image-actions';
@@ -23,9 +23,11 @@ function Editor() {
         const storageRef = ref(storage, `image/${Date.now()}`);
         await uploadBytes(storageRef, file as File).then((snapshot) => {
           getDownloadURL(snapshot.ref).then((url) => {
-            editor.insertEmbed(range.index, 'image', url);
-            editor.setSelection(range.index + 1, 0);
-            console.log('url :', url);
+            {
+              editor.insertEmbed(range.index, 'image', url);
+              editor.setSelection(range.index + 1, 0);
+              console.log('url :', url);
+            }
           });
         });
       } catch (error) {
@@ -70,14 +72,18 @@ function Editor() {
     'width',
   ];
 
-  const modules = {
-    imageActions: {},
-    imageFormats: {},
-    toolbar: {
-      container: toolbarOptions,
-      handlers: { image: editorImageHandler },
-    },
-  };
+  const modules = useMemo(
+    () => ({
+      imageActions: {},
+      imageFormats: {},
+      toolbar: {
+        container: toolbarOptions,
+        handlers: { image: editorImageHandler },
+      },
+    }),
+    [],
+  );
+
   return (
     <div className="flex flex-col items-center">
       <ReactQuill

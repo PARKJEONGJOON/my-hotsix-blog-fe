@@ -7,6 +7,7 @@ import Toast from './components/Notice/Toast';
 import Profile from './pages/Profile/Profile';
 import PasswordEdit from './pages/PasswordEdit/PasswordEdit';
 import Post from './pages/Post/Post';
+import Home from './pages/Home/Home';
 
 const queryClient = new QueryClient();
 
@@ -18,6 +19,7 @@ const App: React.FC = () => (
         <Route path="/" element={<Login />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/home" element={<Home />} />
         <Route path="/passwordedit" element={<PasswordEdit />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/post" element={<Post />} />
