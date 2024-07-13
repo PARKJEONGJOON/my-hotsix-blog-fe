@@ -1,9 +1,11 @@
 {
     "users": [
-        {
-            "id" : 1,
-            "email" : "test@ex.com",
-            "password": "password123"
-        }
+      {
+        "userName": "wongi",
+        "userEmail": "wongi@email.com",
+        "gitUrl": "https://github.com/wongi",
+        "introduce": "안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요 ",
+        "profileImage": "https://example.com/profile.jpg"
+      }
     ]
-}
+  }
