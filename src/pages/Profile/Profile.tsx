@@ -8,6 +8,7 @@ import { fetchUserProfile, updateUserProfile } from '../../api/userAPI';
 import { UserData } from '../../types/UserData';
 import EditableInputField from '../../components/Profile/EditTableInput';
 import DisplayField from '../../components/Profile/DisplayField';
+import APItest from '../../components/APItest/APItest';
 
 interface EditToggle {
   userName: boolean;
@@ -110,6 +111,7 @@ function Profile() {
     if (data) {
       setUserData(data);
     }
+    console.log(data);
   }, [data]);
 
   if (error) {
@@ -221,6 +223,7 @@ function Profile() {
           </EditSection>
         </EditSection>
       </EditSectionsContainer>
+      <APItest />
     </Container>
   );
 }
@@ -294,7 +297,7 @@ const EditSection = styled.div`
 const Label = styled.label`
   width: 104px;
   height: 21px;
-  font-family: 'MangoDdobak';
+  font-family: 'MangoRegular';
   font-style: normal;
   font-weight: 400;
   font-size: 13px;
@@ -311,7 +314,7 @@ const IntroduceHeader = styled.div`
 const IntroduceHeaderText = styled.div`
   font-style: normal;
   font-weight: 400;
-  font-family: 'MangoDdobak';
+  font-family: 'MangoRegular';
   font-size: 13px;
   line-height: 20px;
   color: #001354;
@@ -320,7 +323,7 @@ const IntroduceBox = styled.div`
   padding: 10px;
   font-style: normal;
   font-weight: 400;
-  font-family: 'MangoDdobak';
+  font-family: 'MangoRegular';
   font-size: 14px;
   line-height: 20px;
   box-sizing: border-box;
@@ -350,7 +353,7 @@ const IntroduceTextarea = styled.textarea`
   border: 1px solid #ffffff;
   border-radius: 4px;
   padding: 10px;
-  font-family: 'MangoDdobak';
+  font-family: 'MangoRegular';
   font-weight: 400;
   font-size: 14px;
   line-height: 18px;
@@ -365,7 +368,7 @@ const IntroduceTextarea = styled.textarea`
 const ImageUploadButton = styled.button`
   margin-top: 10px;
   font-style: normal;
-  font-family: 'MangoDdobak';
+  font-family: 'MangoRegular';
   font-weight: 400;
   font-size: 13px;
   line-height: 20px;
@@ -389,7 +392,7 @@ const ImageDeleteButton = styled.button`
   height: 21px;
   font-style: normal;
   font-weight: 400;
-  font-family: 'MangoDdobak';
+  font-family: 'MangoRegular';
   font-size: 13px;
   line-height: 20px;
   color: #555555;
@@ -410,7 +413,7 @@ const IntroduceEditButton = styled.button`
   background: #ffffff;
   font-style: normal;
   font-weight: 400;
-  font-family: 'MangoDdobak';
+  font-family: 'MangoRegular';
   font-size: 13px;
   line-height: 20px;
   color: #001354;
@@ -434,7 +437,7 @@ const PasswordEditButton = styled(Link)`
   align-items: center;
   justify-content: center;
   border-radius: 10px;
-  font-family: 'MangoDdobak';
+  font-family: 'MangoRegular';
   font-style: normal;
   font-weight: 400;
   font-size: 13px;
@@ -458,7 +461,7 @@ const SaveButton = styled.button`
   border: 1px solid #001354;
   border-radius: 5px;
   margin-left: 45px;
-  font-family: 'MangoDdobak';
+  font-family: 'MangoRegular';
   font-style: normal;
   font-weight: 400;
   font-size: 13px;
@@ -475,7 +478,7 @@ const UserDeleteButton = styled.button`
 
   border-radius: 5px;
 
-  font-family: 'MangoDdobak';
+  font-family: 'MangoRegular';
   font-style: normal;
   font-weight: 100;
   font-size: 13px;

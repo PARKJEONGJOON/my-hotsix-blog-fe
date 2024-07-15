@@ -1,6 +1,7 @@
 {
   "name": "client",
   "version": "0.1.0",
+  "proxy": "http://223.130.154.175:3000",
   "private": true,
   "dependencies": {
     "@tanstack/react-query": "^5.49.2",
