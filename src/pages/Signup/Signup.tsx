@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import InputField from '../../components/SignUp/SignupInput'
+import InputField from '../../components/Signup/SignupInput'
 import useInput from './../../hooks/useInput';
 import { useNavigate } from 'react-router-dom';
 import { useMutation, UseMutationResult } from '@tanstack/react-query';

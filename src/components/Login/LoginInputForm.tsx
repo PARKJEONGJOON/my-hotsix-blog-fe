@@ -7,7 +7,7 @@ interface LoginInputFormProps {
     placeholder: string;
     value?: string;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-}
+};
 
 const LoginInputForm: React.FC<LoginInputFormProps> = ({ type, id, placeholder, value, onChange }) => {
 

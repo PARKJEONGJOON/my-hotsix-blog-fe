@@ -3,7 +3,7 @@ import React from 'react';
 interface LoginButtonProps {
   text: string;
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
-}
+};
 
 const LoginButton: React.FC<LoginButtonProps> = ({ text, onClick }) => {
   return (
@@ -11,6 +11,6 @@ const LoginButton: React.FC<LoginButtonProps> = ({ text, onClick }) => {
       {text}
     </button>
   );
-}
+};
 
 export default LoginButton;

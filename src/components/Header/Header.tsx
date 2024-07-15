@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 interface Props {
   // user정보 받아오게 되면 optional 해젠
   userName?: string;
-}
+};
 
 const Header = ({ userName = 'Hotsix' }: Props) => {
   return (
