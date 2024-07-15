@@ -1,14 +1,18 @@
-import { AxiosError } from 'axios';
 import defaultProfile from '../../assets/images/defaultProfile.png';
 import { ChangeEvent, RefObject, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { fetchUserProfile, updateUserProfile } from '../../api/userAPI';
+import {
+  fetchUserProfile,
+  updateUserName,
+  updateUserProfile,
+} from '../../api/userAPI';
 import { UserData } from '../../types/UserData';
 import EditableInputField from '../../components/Profile/EditTableInput';
 import DisplayField from '../../components/Profile/DisplayField';
 import APItest from '../../components/APItest/APItest';
+import { AxiosError } from 'axios';
 
 interface EditToggle {
   userName: boolean;
@@ -40,18 +44,23 @@ function Profile() {
     introduce: undefined,
   });
 
-  const { data, error } = useQuery<UserData, AxiosError>({
+  const { data, error } = useQuery<UserData>({
     queryKey: ['getprofile'],
     queryFn: fetchUserProfile,
   });
-
-  const { mutate } = useMutation({
+  const { mutate: userDataMutate } = useMutation({
     mutationFn: updateUserProfile,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['getprofile'] });
     },
   });
 
+  const { mutate: userNameMutate, error: ne } = useMutation({
+    mutationFn: updateUserName,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['getprofile'] });
+    },
+  });
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -66,26 +75,25 @@ function Profile() {
   const handleImageDelete = () => {
     setProfileImage(null);
   };
-
   const handleIntroduceChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    setUserData({
-      ...userData,
+    setUserData((prevUserData) => ({
+      ...prevUserData,
       introduce: e.target.value,
-    });
+    }));
   };
 
   const handleUserNameChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setUserData({
-      ...userData,
+    setUserData((prevUserData) => ({
+      ...prevUserData,
       userName: e.target.value,
-    });
+    }));
   };
 
   const handleGitUrlChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setUserData({
-      ...userData,
+    setUserData((prevUserData) => ({
+      ...prevUserData,
       gitUrl: e.target.value,
-    });
+    }));
   };
 
   const handleEditToggle = (
@@ -111,7 +119,6 @@ function Profile() {
     if (data) {
       setUserData(data);
     }
-    console.log(data);
   }, [data]);
 
   if (error) {
@@ -143,7 +150,7 @@ function Profile() {
               <SaveButton
                 onClick={() => {
                   handleEditToggle('introduce', introduceRef);
-                  mutate(userData);
+                  userDataMutate({ newIntroduce: userData.introduce });
                 }}
               >
                 저장
@@ -184,7 +191,7 @@ function Profile() {
               onChange={handleUserNameChange}
               onSave={() => {
                 handleEditToggle('userName', userNameRef);
-                mutate(userData);
+                userNameMutate({ newUserName: userData.userName });
               }}
               placeholder="수정할 닉네임"
             />
@@ -205,7 +212,7 @@ function Profile() {
               onChange={handleGitUrlChange}
               onSave={() => {
                 handleEditToggle('gitUrl', gitUrlRef);
-                mutate(userData);
+                userDataMutate({ newGitUrl: userData.gitUrl });
               }}
               placeholder="수정할 Github URL"
             />

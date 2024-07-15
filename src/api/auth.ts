@@ -1,7 +1,7 @@
 import axiosInstance from './axiosInstance';
 
 export interface LoginData {
-  email: string;
+  userId: string;
   password: string;
 }
 
@@ -31,4 +31,4 @@ export const logout = async () => {
     console.log('로그아웃 실패', error);
     return false;
   }
-}
+};

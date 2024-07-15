@@ -35,9 +35,9 @@ function Toast() {
       pauseOnFocusLoss
       draggable
       pauseOnHover
-      theme="colored"
+      //theme="colored"
       transition={Slide}
     />
   );
-};
+}
 export default Toast;

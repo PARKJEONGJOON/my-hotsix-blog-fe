@@ -10,7 +10,7 @@ const APItest = () => {
         '/api/users/login',
         {
           userId: 'jeongp616@naver.com',
-          password: '12341234',
+          password: 'password4',
         },
         {
           headers: {
