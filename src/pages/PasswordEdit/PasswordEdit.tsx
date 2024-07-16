@@ -1,8 +1,12 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { notify } from '../../components/Notice/Toast';
 import EmailInputField from '../../components/ValidateEmail/EmailInputField';
 import Timer from '../../components/ValidateEmail/Timer';
-
+import create from 'zustand';
+import { useStore } from '../../store';
+import axios from 'axios';
+import { Email } from '../../types/validateEmail';
+import { useMutation } from '@tanstack/react-query';
 function PasswordEdit() {
   const [showCode, setShowCode] = useState<boolean>(false);
   const [emailButton, setEmailButton] = useState<string>('normal');
@@ -10,13 +14,20 @@ function PasswordEdit() {
   const [showTimer, setShowTimer] = useState<boolean>(false);
   const [firstPassword, setFirstPassword] = useState<string>('');
   const [secondPassword, setSecondPassword] = useState<string>('');
+  const [inputEmail, setInputEmail] = useState<string>('');
+  const [emailCode, setEmailCode] = useState<string>('');
 
   const handleFirstPasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFirstPassword(e.target.value);
   };
-
   const handleSecondPasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSecondPassword(e.target.value);
+  };
+  const handleInputEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setInputEmail(e.target.value);
+  };
+  const handleEmailCodeChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setEmailCode(e.target.value);
   };
 
   const submitPassword = () => {
@@ -24,7 +35,49 @@ function PasswordEdit() {
       notify('비밀번호를 확인해주세요');
     }
   };
-  //const handleEmailvalidate = () => {};
+
+  const requestEmail = async (email: Email) => {
+    try {
+      const response = await axios.post('/api/verifies/request', email); // Adjust the URL based on your API
+      console.log(response);
+      setShowCode(true);
+      setEmailButton('sended');
+      setShowTimer(true);
+      return response.data;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        if (error.response) {
+          notify(error.response.data.error);
+        } else {
+          notify(error.message);
+        }
+      }
+    }
+  };
+  const cheackCode = async (code: Email) => {
+    try {
+      const response = await axios.post('/api/verifies/code', code); // Adjust the URL based on your API
+      console.log(response);
+      setCodeButton('cheack');
+      setShowTimer(false);
+      return response.data;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        if (error.response) {
+          notify(error.response.data.error);
+        } else {
+          notify(error.message);
+        }
+      }
+    }
+  };
+  const { mutate: requestMutate } = useMutation({
+    mutationFn: requestEmail,
+  });
+  const { mutate: cheackCodeMutate } = useMutation({
+    mutationFn: cheackCode,
+  });
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen overflow-hidden">
       <h1 className="text-3xl font-bold mb-6 text-darkblue">
@@ -35,11 +88,9 @@ function PasswordEdit() {
           <EmailInputField
             title="이메일 입력란"
             onclick={() => {
-              setShowCode(true);
-              setEmailButton('sended');
-              setShowTimer(true);
+              requestMutate({ email: inputEmail });
             }}
-            onchange={() => console.log('test')}
+            onchange={handleInputEmailChange}
             buttontext="이메일 인증"
             showbutton={true}
             type={'email'}
@@ -55,10 +106,9 @@ function PasswordEdit() {
           <EmailInputField
             title="인증코드"
             onclick={() => {
-              setCodeButton('cheack');
-              setShowTimer(false);
+              cheackCodeMutate({ email: inputEmail, resetCode: emailCode });
             }}
-            onchange={() => console.log('test')}
+            onchange={handleEmailCodeChange}
             buttontext="확인"
             showbutton={true}
             sort={codeButton}

@@ -25,7 +25,6 @@ interface EditToggle {
 
 function Profile() {
   const userNameRef = useRef<HTMLInputElement>(null);
-
   const gitUrlRef = useRef<HTMLInputElement>(null);
   const introduceRef = useRef<HTMLTextAreaElement>(null);
   const [file, setFile] = useState<File | null>(null);
@@ -75,7 +74,6 @@ function Profile() {
       uploadImage(file);
     }
   };
-
   // Firebase에 이미지 업로드 후 URL 설정
   const uploadImage = async (file: File) => {
     try {
@@ -86,7 +84,6 @@ function Profile() {
       console.error('Error uploading image:', error);
     }
   };
-
   // 이미지 삭제 처리
   const handleImageDelete = () => {
     setFile(null);

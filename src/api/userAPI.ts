@@ -1,6 +1,9 @@
 import axios from 'axios';
 import { NewUserData, UserData } from '../types/UserData';
 import { notify } from '../components/Notice/Toast';
+import { Email } from '../types/validateEmail';
+import { useStore } from '../store';
+
 export const fetchUserProfile = async (): Promise<UserData> => {
   const response = await axios.get<UserData>('/api/users');
   return response.data;
@@ -66,7 +69,18 @@ export const signout = async () => {
     alert('회원 탈퇴 중 오류가 발생했습니다. 다시 시도해 주세요.');
   }
 };
-export const postReset = async (email: string) => {
-  const response = await axios.post('/api/users/reset', { email: email });
-  return response.data;
-};
+// export const requestEmail = async (email: Email) => {
+//   try {
+//     const response = await axios.post('/api/verifies/request', email); // Adjust the URL based on your API
+//     console.log(response);
+//     return response.data;
+//   } catch (error) {
+//     if (axios.isAxiosError(error)) {
+//       if (error.response) {
+//         notify(error.response.data.error);
+//       } else {
+//         notify(error.message);
+//       }
+//     }
+//   }
+// };
