@@ -8,7 +8,7 @@ export interface UserData {
 }
 export interface NewUserData {
   newUserName?: string;
-  NewProfileImg?: string | null;
+  newProfileImg?: string | null;
   newGitUrl?: string | undefined;
   newIntroduce?: string | undefined;
 }

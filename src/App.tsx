@@ -4,10 +4,11 @@ import Signup from './pages/Signup/Signup';
 import Login from './pages/Login/Login';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import Toast from './components/Notice/Toast';
-import Profile from './pages/Profile/Profile';
+
 import PasswordEdit from './pages/PasswordEdit/PasswordEdit';
 import Post from './pages/Post/Post';
 import Home from './pages/Home/Home';
+import Profile from './pages/Profile/Profile';
 
 const queryClient = new QueryClient();
 

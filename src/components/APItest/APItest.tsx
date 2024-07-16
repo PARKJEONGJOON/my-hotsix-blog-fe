@@ -19,15 +19,12 @@ const APItest = () => {
         },
       );
 
-      console.log(response.data); // 로그인 성공 시 서버에서 반환한 데이터 확인
-      // 여기서 필요한 로그인 성공 처리를 추가할 수 있습니다.
+      console.log(response.data);
     } catch (error: any) {
-      // AxiosError 타입 적용
       if (error.response) {
-        console.error('로그인 실패:', error.response.data); // 로그인 실패 시 서버에서 반환한 에러 메시지 출력
-        // 여기서 필요한 로그인 실패 처리를 추가할 수 있습니다.
+        console.error('로그인 실패:', error.response.data);
       } else {
-        console.error('네트워크 오류:', error.message); // 네트워크 오류 처리
+        console.error('네트워크 오류:', error.message);
       }
     }
   };

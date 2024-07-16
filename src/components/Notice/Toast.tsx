@@ -1,26 +1,8 @@
 import { Slide, ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-interface ToastProps {
-  type: string;
-  text: string;
-}
-
-export const notify = ({ type, text }: ToastProps) => {
-  switch (type) {
-    case 'default':
-      toast.info(text);
-      break;
-    case 'success':
-      toast.success(text);
-      break;
-    case 'warning':
-      toast.warning(text);
-      break;
-    case 'error':
-      toast.error(text);
-      break;
-  }
+export const notify = (text: string) => {
+  toast.info(text);
 };
 
 function Toast() {

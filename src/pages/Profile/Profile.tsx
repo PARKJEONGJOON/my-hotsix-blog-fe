@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   fetchUserProfile,
+  updateProfileImg,
   updateUserName,
   updateUserProfile,
 } from '../../api/userAPI';
@@ -12,7 +13,8 @@ import { UserData } from '../../types/UserData';
 import EditableInputField from '../../components/Profile/EditTableInput';
 import DisplayField from '../../components/Profile/DisplayField';
 import APItest from '../../components/APItest/APItest';
-import { AxiosError } from 'axios';
+import { uploadImageToFirebase } from '../../Firebase';
+import Header from '../../components/Header/Header';
 
 interface EditToggle {
   userName: boolean;
@@ -26,9 +28,7 @@ function Profile() {
 
   const gitUrlRef = useRef<HTMLInputElement>(null);
   const introduceRef = useRef<HTMLTextAreaElement>(null);
-
-  const queryClient = useQueryClient();
-  const [profileImage, setProfileImage] = useState<string | null>(null);
+  const [file, setFile] = useState<File | null>(null);
   const [editToggle, setEditToggle] = useState<EditToggle>({
     userName: false,
     email: false,
@@ -44,6 +44,7 @@ function Profile() {
     introduce: undefined,
   });
 
+  const queryClient = useQueryClient();
   const { data, error } = useQuery<UserData>({
     queryKey: ['getprofile'],
     queryFn: fetchUserProfile,
@@ -54,27 +55,45 @@ function Profile() {
       queryClient.invalidateQueries({ queryKey: ['getprofile'] });
     },
   });
-
-  const { mutate: userNameMutate, error: ne } = useMutation({
+  const { mutate: profileImgMutate } = useMutation({
+    mutationFn: updateProfileImg,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['getprofile'] });
+    },
+  });
+  const { mutate: userNameMutate } = useMutation({
     mutationFn: updateUserName,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['getprofile'] });
     },
   });
+
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setProfileImage(reader.result as string);
-      };
-      reader.readAsDataURL(file);
+      setFile(file);
+      uploadImage(file);
     }
   };
 
-  const handleImageDelete = () => {
-    setProfileImage(null);
+  // Firebase에 이미지 업로드 후 URL 설정
+  const uploadImage = async (file: File) => {
+    try {
+      const url = await uploadImageToFirebase(file);
+      setUserData({ profileImg: url });
+      profileImgMutate({ newProfileImg: url });
+    } catch (error) {
+      console.error('Error uploading image:', error);
+    }
   };
+
+  // 이미지 삭제 처리
+  const handleImageDelete = () => {
+    setFile(null);
+    setUserData({ profileImg: '' });
+    profileImgMutate({ newProfileImg: '' });
+  };
+
   const handleIntroduceChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setUserData((prevUserData) => ({
       ...prevUserData,
@@ -95,7 +114,12 @@ function Profile() {
       gitUrl: e.target.value,
     }));
   };
-
+  const handleDeleteAccount = async () => {
+    const confirmed = window.confirm('정말로 회원 탈퇴를 하시겠습니까?');
+    if (confirmed) {
+      //
+    }
+  };
   const handleEditToggle = (
     key: keyof EditToggle,
     ref: RefObject<HTMLInputElement | HTMLTextAreaElement>,
@@ -126,112 +150,117 @@ function Profile() {
   }
 
   return (
-    <Container>
-      <ProfileSection>
-        <ProfileColumn>
-          <ProfileImage src={profileImage || defaultProfile} />
-          <ImageUploadButton>
-            <label htmlFor="fileInput">이미지 업로드</label>
-            <FileInput
-              id="fileInput"
-              type="file"
-              accept="image/*"
-              onChange={handleImageChange}
-            />
-          </ImageUploadButton>
-          <ImageDeleteButton onClick={handleImageDelete}>
-            이미지 제거
-          </ImageDeleteButton>
-        </ProfileColumn>
-        <IntroduceColumn>
-          <IntroduceHeader>
-            <IntroduceHeaderText>한 줄 소개</IntroduceHeaderText>
-            {editToggle.introduce ? (
-              <SaveButton
-                onClick={() => {
-                  handleEditToggle('introduce', introduceRef);
-                  userDataMutate({ newIntroduce: userData.introduce });
-                }}
-              >
-                저장
-              </SaveButton>
-            ) : (
-              <IntroduceEditButton
-                onClick={() => handleEditToggle('introduce', introduceRef)}
-              >
-                수정
-              </IntroduceEditButton>
-            )}
-          </IntroduceHeader>
-          {editToggle.introduce ? (
-            <EditIntroduceBox>
-              <IntroduceTextarea
-                ref={introduceRef}
-                id="introduceTextArea"
-                value={userData.introduce}
-                onChange={handleIntroduceChange}
-                placeholder="한줄 소개 입력"
+    <div>
+      <Header />
+      <Container>
+        <ProfileSection>
+          <ProfileColumn>
+            <ProfileImage src={userData.profileImg || defaultProfile} />
+            <ImageUploadButton>
+              <label htmlFor="fileInput">이미지 업로드</label>
+              <FileInput
+                id="fileInput"
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
               />
-            </EditIntroduceBox>
-          ) : (
-            <IntroduceBox>{userData.introduce}</IntroduceBox>
-          )}
-          <PasswordEditButton to="/passwordedit">
-            비밀번호 변경하러 가기
-          </PasswordEditButton>
-        </IntroduceColumn>
-      </ProfileSection>
-      <EditSectionsContainer>
-        <EditSection>
-          <Label htmlFor="userNameInput">닉네임 변경</Label>
-          {editToggle.userName ? (
-            <EditableInputField
-              inputRef={userNameRef}
-              value={userData.userName}
-              onChange={handleUserNameChange}
-              onSave={() => {
-                handleEditToggle('userName', userNameRef);
-                userNameMutate({ newUserName: userData.userName });
-              }}
-              placeholder="수정할 닉네임"
-            />
-          ) : (
-            <DisplayField
-              value={userData.userName}
-              onEdit={() => handleEditToggle('userName', userNameRef)}
-            />
-          )}
-        </EditSection>
-
-        <EditSection>
-          <Label htmlFor="gitUrlInput">Github URL 변경</Label>
-          {editToggle.gitUrl ? (
-            <EditableInputField
-              inputRef={gitUrlRef}
-              value={userData.gitUrl}
-              onChange={handleGitUrlChange}
-              onSave={() => {
-                handleEditToggle('gitUrl', gitUrlRef);
-                userDataMutate({ newGitUrl: userData.gitUrl });
-              }}
-              placeholder="수정할 Github URL"
-            />
-          ) : (
-            <DisplayField
-              value={userData.gitUrl}
-              onEdit={() => handleEditToggle('gitUrl', gitUrlRef)}
-            />
-          )}
-        </EditSection>
-        <EditSection>
-          <Label>회원탈퇴</Label>
+            </ImageUploadButton>
+            <ImageDeleteButton onClick={handleImageDelete}>
+              이미지 제거
+            </ImageDeleteButton>
+          </ProfileColumn>
+          <IntroduceColumn>
+            <IntroduceHeader>
+              <IntroduceHeaderText>한 줄 소개</IntroduceHeaderText>
+              {editToggle.introduce ? (
+                <SaveButton
+                  onClick={() => {
+                    handleEditToggle('introduce', introduceRef);
+                    userDataMutate({ newIntroduce: userData.introduce });
+                  }}
+                >
+                  저장
+                </SaveButton>
+              ) : (
+                <IntroduceEditButton
+                  onClick={() => handleEditToggle('introduce', introduceRef)}
+                >
+                  수정
+                </IntroduceEditButton>
+              )}
+            </IntroduceHeader>
+            {editToggle.introduce ? (
+              <EditIntroduceBox>
+                <IntroduceTextarea
+                  ref={introduceRef}
+                  id="introduceTextArea"
+                  value={userData.introduce}
+                  onChange={handleIntroduceChange}
+                  placeholder="한줄 소개 입력"
+                />
+              </EditIntroduceBox>
+            ) : (
+              <IntroduceBox>{userData.introduce}</IntroduceBox>
+            )}
+            <PasswordEditButton to="/passwordedit">
+              비밀번호 변경하러 가기
+            </PasswordEditButton>
+          </IntroduceColumn>
+        </ProfileSection>
+        <EditSectionsContainer>
           <EditSection>
-            <UserDeleteButton>회원 탈퇴</UserDeleteButton>
+            <Label htmlFor="userNameInput">닉네임 변경</Label>
+            {editToggle.userName ? (
+              <EditableInputField
+                inputRef={userNameRef}
+                value={userData.userName}
+                onChange={handleUserNameChange}
+                onSave={() => {
+                  handleEditToggle('userName', userNameRef);
+                  userNameMutate({ newUserName: userData.userName });
+                }}
+                placeholder="수정할 닉네임"
+              />
+            ) : (
+              <DisplayField
+                value={userData.userName}
+                onEdit={() => handleEditToggle('userName', userNameRef)}
+              />
+            )}
           </EditSection>
-        </EditSection>
-      </EditSectionsContainer>
-      <APItest />
-    </Container>
+
+          <EditSection>
+            <Label htmlFor="gitUrlInput">Github URL 변경</Label>
+            {editToggle.gitUrl ? (
+              <EditableInputField
+                inputRef={gitUrlRef}
+                value={userData.gitUrl}
+                onChange={handleGitUrlChange}
+                onSave={() => {
+                  handleEditToggle('gitUrl', gitUrlRef);
+                  userDataMutate({ newGitUrl: userData.gitUrl });
+                }}
+                placeholder="수정할 Github URL"
+              />
+            ) : (
+              <DisplayField
+                value={userData.gitUrl}
+                onEdit={() => handleEditToggle('gitUrl', gitUrlRef)}
+              />
+            )}
+          </EditSection>
+          <EditSection>
+            <Label>회원탈퇴</Label>
+            <EditSection>
+              <UserDeleteButton onClick={handleDeleteAccount}>
+                회원 탈퇴
+              </UserDeleteButton>
+            </EditSection>
+          </EditSection>
+        </EditSectionsContainer>
+        <APItest />
+      </Container>
+    </div>
   );
 }
 
@@ -242,8 +271,9 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 100px;
+  justify-content: center;
   background-color: #ffffff;
+  margin-top: 100px;
 `;
 
 const ProfileSection = styled.div`

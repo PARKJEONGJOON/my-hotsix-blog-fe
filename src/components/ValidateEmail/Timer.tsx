@@ -17,11 +17,11 @@ function Timer() {
     return () => clearInterval(timerId.current);
   }, []);
   return sec < 10 ? (
-    <div className="text-[10px] text-gray-400 font-bold">
+    <div className="text-[10px] text-gray font-bold">
       0{min}:0{sec}
     </div>
   ) : (
-    <div className="text-[10px] text-gray-400 font-bold">
+    <div className="text-[10px] text-gray font-bold">
       0{min}:{sec}
     </div>
   );

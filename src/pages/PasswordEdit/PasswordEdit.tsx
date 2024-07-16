@@ -21,7 +21,7 @@ function PasswordEdit() {
 
   const submitPassword = () => {
     if (firstPassword !== secondPassword) {
-      notify({ type: 'error', text: '비밀번호를 확인해주세요' });
+      notify('비밀번호를 확인해주세요');
     }
   };
   //const handleEmailvalidate = () => {};

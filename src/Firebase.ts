@@ -1,12 +1,6 @@
-// Import the functions you need from the SDKs you need
 import { initializeApp } from 'firebase/app';
-import { getAnalytics } from 'firebase/analytics';
-import { getStorage } from 'firebase/storage';
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: 'AIzaSyDPVkgzrSDgz0x5Kp9u3F_1tnMy5f80Gxo',
   authDomain: 'hotsix-blog-5f9b1.firebaseapp.com',
@@ -20,4 +14,10 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 export const storage = getStorage();
-const analytics = getAnalytics(app);
+
+export const uploadImageToFirebase = async (file: File): Promise<string> => {
+  const storageRef = ref(storage, `profile_images/${file.name}`);
+  await uploadBytes(storageRef, file);
+  const url = await getDownloadURL(storageRef);
+  return url;
+};

@@ -23,11 +23,9 @@ function Editor() {
         const storageRef = ref(storage, `image/${Date.now()}`);
         await uploadBytes(storageRef, file as File).then((snapshot) => {
           getDownloadURL(snapshot.ref).then((url) => {
-            {
-              editor.insertEmbed(range.index, 'image', url);
-              editor.setSelection(range.index + 1, 0);
-              console.log('url :', url);
-            }
+            editor.insertEmbed(range.index, 'image', url);
+            editor.setSelection(range.index + 1, 0);
+            console.log('url :', url);
           });
         });
       } catch (error) {
@@ -83,11 +81,13 @@ function Editor() {
     }),
     [],
   );
-
+  useEffect(() => {
+    console.log('Editor content changed:', value);
+  }, [value]);
   return (
     <div className="flex flex-col items-center">
       <ReactQuill
-        style={{ height: '500px', width: '650px' }}
+        className="w-[620px] h-full md:h-[calc(100vh-250px)] lg:h-[calc(100vh-250px)]"
         value={value || ''}
         theme="snow"
         modules={modules}
@@ -97,5 +97,5 @@ function Editor() {
       />
     </div>
   );
-};
+}
 export default Editor;
