@@ -8,6 +8,7 @@ import { fetchUserProfile, updateUserProfile } from '../../api/userAPI';
 import { UserData } from '../../types/UserData';
 import EditableInputField from '../../components/Profile/EditTableInput';
 import DisplayField from '../../components/Profile/DisplayField';
+import Header from '../../components/Header/Header';
 
 interface EditToggle {
   userName: boolean;
@@ -117,111 +118,114 @@ function Profile() {
   }
 
   return (
-    <Container>
-      <ProfileSection>
-        <ProfileColumn>
-          <ProfileImage src={profileImage || defaultProfile} />
-          <ImageUploadButton>
-            <label htmlFor="fileInput">이미지 업로드</label>
-            <FileInput
-              id="fileInput"
-              type="file"
-              accept="image/*"
-              onChange={handleImageChange}
-            />
-          </ImageUploadButton>
-          <ImageDeleteButton onClick={handleImageDelete}>
-            이미지 제거
-          </ImageDeleteButton>
-        </ProfileColumn>
-        <IntroduceColumn>
-          <IntroduceHeader>
-            <IntroduceHeaderText>한 줄 소개</IntroduceHeaderText>
+    <>
+    <Header />
+      <Container>
+        <ProfileSection>
+          <ProfileColumn>
+            <ProfileImage src={profileImage || defaultProfile} />
+            <ImageUploadButton>
+              <label htmlFor="fileInput">이미지 업로드</label>
+              <FileInput
+                id="fileInput"
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
+              />
+            </ImageUploadButton>
+            <ImageDeleteButton onClick={handleImageDelete}>
+              이미지 제거
+            </ImageDeleteButton>
+          </ProfileColumn>
+          <IntroduceColumn>
+            <IntroduceHeader>
+              <IntroduceHeaderText>한 줄 소개</IntroduceHeaderText>
+              {editToggle.introduce ? (
+                <SaveButton
+                  onClick={() => {
+                    handleEditToggle('introduce', introduceRef);
+                    mutate(userData);
+                  }}
+                >
+                  저장
+                </SaveButton>
+              ) : (
+                <IntroduceEditButton
+                  onClick={() => handleEditToggle('introduce', introduceRef)}
+                >
+                  수정
+                </IntroduceEditButton>
+              )}
+            </IntroduceHeader>
             {editToggle.introduce ? (
-              <SaveButton
-                onClick={() => {
-                  handleEditToggle('introduce', introduceRef);
+              <EditIntroduceBox>
+                <IntroduceTextarea
+                  ref={introduceRef}
+                  id="introduceTextArea"
+                  value={userData.introduce}
+                  onChange={handleIntroduceChange}
+                  placeholder="한줄 소개 입력"
+                />
+              </EditIntroduceBox>
+            ) : (
+              <IntroduceBox>{userData.introduce}</IntroduceBox>
+            )}
+            <PasswordEditButton to="/passwordedit">
+              비밀번호 변경하러 가기
+            </PasswordEditButton>
+          </IntroduceColumn>
+        </ProfileSection>
+        <EditSectionsContainer>
+          <EditSection>
+            <Label htmlFor="userNameInput">닉네임 변경</Label>
+            {editToggle.userName ? (
+              <EditableInputField
+                inputRef={userNameRef}
+                value={userData.userName}
+                onChange={handleUserNameChange}
+                onSave={() => {
+                  handleEditToggle('userName', userNameRef);
                   mutate(userData);
                 }}
-              >
-                저장
-              </SaveButton>
-            ) : (
-              <IntroduceEditButton
-                onClick={() => handleEditToggle('introduce', introduceRef)}
-              >
-                수정
-              </IntroduceEditButton>
-            )}
-          </IntroduceHeader>
-          {editToggle.introduce ? (
-            <EditIntroduceBox>
-              <IntroduceTextarea
-                ref={introduceRef}
-                id="introduceTextArea"
-                value={userData.introduce}
-                onChange={handleIntroduceChange}
-                placeholder="한줄 소개 입력"
+                placeholder="수정할 닉네임"
               />
-            </EditIntroduceBox>
-          ) : (
-            <IntroduceBox>{userData.introduce}</IntroduceBox>
-          )}
-          <PasswordEditButton to="/passwordedit">
-            비밀번호 변경하러 가기
-          </PasswordEditButton>
-        </IntroduceColumn>
-      </ProfileSection>
-      <EditSectionsContainer>
-        <EditSection>
-          <Label htmlFor="userNameInput">닉네임 변경</Label>
-          {editToggle.userName ? (
-            <EditableInputField
-              inputRef={userNameRef}
-              value={userData.userName}
-              onChange={handleUserNameChange}
-              onSave={() => {
-                handleEditToggle('userName', userNameRef);
-                mutate(userData);
-              }}
-              placeholder="수정할 닉네임"
-            />
-          ) : (
-            <DisplayField
-              value={userData.userName}
-              onEdit={() => handleEditToggle('userName', userNameRef)}
-            />
-          )}
-        </EditSection>
-
-        <EditSection>
-          <Label htmlFor="gitUrlInput">Github URL 변경</Label>
-          {editToggle.gitUrl ? (
-            <EditableInputField
-              inputRef={gitUrlRef}
-              value={userData.gitUrl}
-              onChange={handleGitUrlChange}
-              onSave={() => {
-                handleEditToggle('gitUrl', gitUrlRef);
-                mutate(userData);
-              }}
-              placeholder="수정할 Github URL"
-            />
-          ) : (
-            <DisplayField
-              value={userData.gitUrl}
-              onEdit={() => handleEditToggle('gitUrl', gitUrlRef)}
-            />
-          )}
-        </EditSection>
-        <EditSection>
-          <Label>회원탈퇴</Label>
-          <EditSection>
-            <UserDeleteButton>회원 탈퇴</UserDeleteButton>
+            ) : (
+              <DisplayField
+                value={userData.userName}
+                onEdit={() => handleEditToggle('userName', userNameRef)}
+              />
+            )}
           </EditSection>
-        </EditSection>
-      </EditSectionsContainer>
-    </Container>
+
+          <EditSection>
+            <Label htmlFor="gitUrlInput">Github URL 변경</Label>
+            {editToggle.gitUrl ? (
+              <EditableInputField
+                inputRef={gitUrlRef}
+                value={userData.gitUrl}
+                onChange={handleGitUrlChange}
+                onSave={() => {
+                  handleEditToggle('gitUrl', gitUrlRef);
+                  mutate(userData);
+                }}
+                placeholder="수정할 Github URL"
+              />
+            ) : (
+              <DisplayField
+                value={userData.gitUrl}
+                onEdit={() => handleEditToggle('gitUrl', gitUrlRef)}
+              />
+            )}
+          </EditSection>
+          <EditSection>
+            <Label>회원탈퇴</Label>
+            <EditSection>
+              <UserDeleteButton>회원 탈퇴</UserDeleteButton>
+            </EditSection>
+          </EditSection>
+        </EditSectionsContainer>
+      </Container>
+    </>
   );
 }
 
