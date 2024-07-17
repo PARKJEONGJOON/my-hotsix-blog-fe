@@ -4,8 +4,30 @@
         "userName": "wongi",
         "userEmail": "wongi@email.com",
         "gitUrl": "https://github.com/wongi",
-        "introduce": "안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요 ",
-        "profileImage": "https://example.com/profile.jpg"
+        "introduce": "안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요",
+        "profileImg": "https://cdn-icons-png.flaticon.com/512/1361/1361876.png"
       }
-    ]
-  }
+    ],
+    "posts": [
+    {
+      "id": 1,
+      "author": "userName1",
+      "thumb": "https://cdn-icons-png.flaticon.com/512/1361/1361876.png",
+      "title": "First Post",
+      "description": "Content of the first post",
+      "createdAt": "2024-06-28T12:34:56.789Z",
+      "updatedAt": "2024-06-28T12:34:56.789Z",
+      "showStatus": true
+    },
+    {
+      "id": 2,
+      "author": "userName2",
+      "thumb": "",
+      "title": "Second Post",
+      "description": "Content of the second post",
+      "createdAt": "2024-06-28T12:34:56.789Z",
+      "updatedAt": "2024-06-28T12:34:56.789Z",
+      "showStatus": true
+    }
+  ]
+}
