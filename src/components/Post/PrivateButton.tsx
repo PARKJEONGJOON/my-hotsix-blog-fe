@@ -1,10 +1,16 @@
 import { useState } from 'react';
+import { usePostStore } from '../../store';
 type PrivateToggle = 'private' | 'default' | 'public';
 
 const PrivateButton = () => {
+  const { postData, setPostData } = usePostStore();
   const [isPrivate, setIsPrivate] = useState<PrivateToggle>('default');
   const handlePrivateButton = (value: PrivateToggle) => {
     setIsPrivate(value);
+    setPostData({
+      ...postData,
+      showStatus: value === 'private' ? false : true,
+    });
   };
 
   return isPrivate === 'private' ? (

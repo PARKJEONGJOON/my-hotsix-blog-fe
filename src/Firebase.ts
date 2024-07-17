@@ -16,7 +16,7 @@ const app = initializeApp(firebaseConfig);
 export const storage = getStorage();
 
 export const uploadImageToFirebase = async (file: File): Promise<string> => {
-  const storageRef = ref(storage, `profile_images/${file.name}`);
+  const storageRef = ref(storage, `image/${Date.now()}`);
   await uploadBytes(storageRef, file);
   const url = await getDownloadURL(storageRef);
   return url;

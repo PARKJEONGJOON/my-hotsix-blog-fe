@@ -72,6 +72,7 @@ function Profile() {
     if (file) {
       setFile(file);
       uploadImage(file);
+      e.target.value = '';
     }
   };
   // Firebase에 이미지 업로드 후 URL 설정
@@ -270,7 +271,7 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   background-color: #ffffff;
-  margin-top: 100px;
+  margin-top: 22vh;
 `;
 
 const ProfileSection = styled.div`
