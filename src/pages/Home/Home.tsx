@@ -1,13 +1,13 @@
 import Header from "../../components/Header/Header";
 import PostList from "../../components/Home/PostList";
-import { UserContainer } from "../../components/Home/SideUser";
+import SideUser from "../../components/Home/SideUser";
 
 const Home = () => {
     return (
-        <div>
+        <div className='flex flex-col min-h-screen'>
             <Header />
-            <div className="flex flex-row justify-between px-44">
-                <UserContainer />
+            <div className="flex flex-row justify-center">
+                <SideUser />
                 <PostList />
             </div>
         </div>
