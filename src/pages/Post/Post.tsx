@@ -1,20 +1,18 @@
 import defaultThumb from '../../assets/images/defaultThumb.jpg';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent } from 'react';
 import Header from '../../components/Header/Header';
 import Editor from '../../components/Post/Eidtor';
 import PrivateButton from '../../components/Post/PrivateButton';
 import { uploadImageToFirebase } from '../../Firebase';
-import { PostData } from '../../types/Post';
 import { usePostStore } from '../../store';
 import { extractTextFromHTML } from '../../utils/extractTextFromHtml';
 import { useMutation } from '@tanstack/react-query';
 import { registerPost } from '../../api/postAPI';
 import { notify } from '../../components/Notice/Toast';
-import { useNavigate, useNavigation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function Post() {
   const navigate = useNavigate();
-  const [file, setFile] = useState<File | null>(null);
   const { postData, setPostData } = usePostStore();
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -46,16 +44,22 @@ function Post() {
   };
   const handleRegister = () => {
     // 필요한 데이터를 포함하여 mutate 함수 호출
-    if (postData.content) {
-      setPostData({
-        ...postData,
-        description: extractTextFromHTML(postData.content),
-      });
-    }
-    if (postData.showStatus == undefined) {
+
+    setPostData({
+      ...postData,
+      description: extractTextFromHTML(postData.content),
+    });
+
+    if (postData.showStatus === undefined) {
       notify('공개/비공개 선택이 필요합니다.');
+    } else if (!postData.title?.trim()) {
+      notify('제목을 입력해주세요.');
+      console.log(postData.description);
+    } else if (!extractTextFromHTML(postData.content).trim()) {
+      notify('내용을 입력해주세요.');
     } else {
       registerPostMutate(postData);
+      navigate('/home');
     }
   };
 
@@ -72,6 +76,7 @@ function Post() {
           <Editor />
           <div className="flex flex-row">
             <img
+              alt="썸네일 이미지"
               src={postData.thumb || defaultThumb}
               className="flex flex-col w-60 h-16 mt-14 border-gray border-2 rounded-sm"
             />
@@ -111,10 +116,3 @@ function Post() {
 }
 
 export default Post;
-function setUserData(arg0: { profileImg: string }) {
-  throw new Error('Function not implemented.');
-}
-
-function profileImgMutate(arg0: { newProfileImg: string }) {
-  throw new Error('Function not implemented.');
-}
