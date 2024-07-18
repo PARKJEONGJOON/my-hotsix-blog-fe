@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../../index.css';
 import ButtonComponent from '../../components/Login/LoginButton';
 import LoginInputForm from '../../components/Login/LoginInputForm';
@@ -11,11 +11,23 @@ const Login: React.FC = () => {
   const navigate = useNavigate();
   const [submitted, setSubmitted] = useState(false);
 
+  useEffect(() => {
+    const cookie = localStorage.getItem('auth-cookie');
+    if (cookie) {
+      console.log('자동 로그인');
+      navigate('/');
+    }
+  }, [navigate]);
+
   const mutation: UseMutationResult<any, Error, LoginData> = useMutation<any, Error, LoginData>({
     mutationFn: login,
-    onSuccess: () => {
+    onSuccess: (data) => {
       alert('로그인 성공');
-      navigate('/home');
+      const setCookieHeader = data.headers['Set-Cookie'];
+      if (setCookieHeader) {
+        localStorage.setItem('auth-cookie', setCookieHeader);
+      }
+      navigate('/');
     },
     onError: (error: Error) => {
       console.log(error);
@@ -103,6 +115,7 @@ const Login: React.FC = () => {
           <h1 className="text-sm mb-1">계정이 없으시다면?</h1>
           <ButtonComponent text="회원가입" onClick={handleSignup} />
         </div>
+        <h1 className="text-sm text-center">비밀번호를 잊으셨나요?</h1>
       </form>
     </div>
   );
