@@ -7,6 +7,10 @@ interface Props {
   userName?: string;
 };
 
+const handleLogout = () => {
+  localStorage.removeItem('auth-cookie');
+}
+
 const Header = ({ userName = 'Hotsix' }: Props) => {
   return (
     <header className="w-full py-4 border-b-2 border-skyblue shadow flex justify-center items-center whitespace-nowrap">
@@ -31,8 +35,8 @@ const Header = ({ userName = 'Hotsix' }: Props) => {
           <img src={userIcon} className="w-9 h-9" />
         </Link>
         
-        <button className="text-darkblue text-small font-MangoRegular">
-          <Link to="/login">로그아웃</Link>
+        <button className="text-darkblue text-small font-MangoRegular" onClick={handleLogout}>
+        <Link to="/login">로그아웃</Link>
         </button>
       </div>
     </header>
