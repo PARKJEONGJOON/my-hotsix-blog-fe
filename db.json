@@ -1,16 +1,14 @@
 {
-    "users": [
-      {
-        "userName": "wongi",
-        "userEmail": "wongi@email.com",
-        "gitUrl": "https://github.com/wongi",
-        "introduce": "안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요",
-        "profileImg": "https://cdn-icons-png.flaticon.com/512/1361/1361876.png"
-      }
-    ],
-    "posts": [
+  "users": [
     {
-      "id": 1,
+      "id": "1",
+      "email": "asd@asd.asd",
+      "password": "asdasdasd"
+    }
+  ],
+  "posts": [
+    {
+      "id": "1",
       "author": "userName1",
       "thumb": "https://cdn-icons-png.flaticon.com/512/1361/1361876.png",
       "title": "First Post",
@@ -20,7 +18,7 @@
       "showStatus": true
     },
     {
-      "id": 2,
+      "id": "2",
       "author": "userName2",
       "thumb": "",
       "title": "Second Post",

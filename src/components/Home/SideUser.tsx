@@ -25,7 +25,7 @@ const SideUser = () => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    axios.get('http://localhost:5000/users')
+    axios.get('/users')
       .then(response => {
         if (response.data.length > 0) {
           setUserData(response.data[0]);
