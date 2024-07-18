@@ -1,9 +1,31 @@
 {
-    "users": [
-        {
-            "id" : 1,
-            "email" : "test@ex.com",
-            "password": "password123"
-        }
-    ]
+  "users": [
+    {
+      "id": "1",
+      "email": "asd@asd.asd",
+      "password": "asdasdasd"
+    }
+  ],
+  "posts": [
+    {
+      "id": "1",
+      "author": "userName1",
+      "thumb": "https://cdn-icons-png.flaticon.com/512/1361/1361876.png",
+      "title": "First Post",
+      "description": "Content of the first post",
+      "createdAt": "2024-06-28T12:34:56.789Z",
+      "updatedAt": "2024-06-28T12:34:56.789Z",
+      "showStatus": true
+    },
+    {
+      "id": "2",
+      "author": "userName2",
+      "thumb": "",
+      "title": "Second Post",
+      "description": "Content of the second post",
+      "createdAt": "2024-06-28T12:34:56.789Z",
+      "updatedAt": "2024-06-28T12:34:56.789Z",
+      "showStatus": true
+    }
+  ]
 }
