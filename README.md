@@ -12,7 +12,8 @@
 - 상태 관리
 
   - React-Query
-
+  - Zustand
+    
 - 페이지 스타일링
 
   - TailwindCSS

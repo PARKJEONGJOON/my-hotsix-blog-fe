@@ -1,7 +1,7 @@
 import axiosInstance from './axiosInstance';
 
 export interface LoginData {
-  email: string;
+  userId: string;
   password: string;
 }
 

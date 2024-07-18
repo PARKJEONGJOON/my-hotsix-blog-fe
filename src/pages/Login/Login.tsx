@@ -20,6 +20,7 @@ const Login: React.FC = () => {
   }, [navigate]);
 
   const mutation: UseMutationResult<any, Error, LoginData> = useMutation<any, Error, LoginData>({
+
     mutationFn: login,
     onSuccess: (data) => {
       alert('로그인 성공');
@@ -63,9 +64,9 @@ const Login: React.FC = () => {
     setSubmitted(true);
 
     if (!emailInput.error && !passwordInput.error) {
-      mutation.mutate({ 
-        email: emailInput.value, 
-        password: passwordInput.value 
+      mutation.mutate({
+        userId: emailInput.value,
+        password: passwordInput.value,
       });
     }
   };
@@ -79,10 +80,15 @@ const Login: React.FC = () => {
       <div className="text-darkblue text-center mb-4">
         <h1 className="text-3xl bold mb-6">Login</h1>
         <h1 className="text-lg">안녕하세요!</h1>
-        <h1 className="text-lg">블로그 이용을 위해 로그인/회원가입을 해주세요 :)</h1>
+        <h1 className="text-lg">
+          블로그 이용을 위해 로그인/회원가입을 해주세요 :)
+        </h1>
       </div>
 
-      <form onSubmit={handleLogin} className="flex flex-col gap-2 border-2 border-skyblue rounded-3xl p-10">
+      <form
+        onSubmit={handleLogin}
+        className="flex flex-col gap-2 border-2 border-skyblue rounded-3xl p-10"
+      >
         <div className="flex flex-col gap-5">
           <LoginInputForm
             type="text"
@@ -94,7 +100,9 @@ const Login: React.FC = () => {
               if (submitted) emailInput.validate();
             }}
           />
-          {submitted && emailInput.error && <p className="text-red-500">{emailInput.error}</p>}
+          {submitted && emailInput.error && (
+            <p className="text-red-500">{emailInput.error}</p>
+          )}
           <LoginInputForm
             type="password"
             id="PW"
@@ -105,7 +113,9 @@ const Login: React.FC = () => {
               if (submitted) passwordInput.validate();
             }}
           />
-          {submitted && passwordInput.error && <p className="text-red-500">{passwordInput.error}</p>}
+          {submitted && passwordInput.error && (
+            <p className="text-red-500">{passwordInput.error}</p>
+          )}
           <div className="mt-3">
             <ButtonComponent text="로그인" onClick={handleLogin} />
           </div>

@@ -1,13 +1,19 @@
-import { AxiosError } from 'axios';
 import defaultProfile from '../../assets/images/defaultProfile.png';
 import { ChangeEvent, RefObject, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { fetchUserProfile, updateUserProfile } from '../../api/userAPI';
+import {
+  fetchUserProfile,
+  updateProfileImg,
+  updateUserName,
+  updateUserProfile,
+} from '../../api/userAPI';
 import { UserData } from '../../types/UserData';
 import EditableInputField from '../../components/Profile/EditTableInput';
 import DisplayField from '../../components/Profile/DisplayField';
+import APItest from '../../components/APItest/APItest';
+import { uploadImageToFirebase } from '../../Firebase';
 import Header from '../../components/Header/Header';
 
 interface EditToggle {
@@ -19,12 +25,9 @@ interface EditToggle {
 
 function Profile() {
   const userNameRef = useRef<HTMLInputElement>(null);
-
   const gitUrlRef = useRef<HTMLInputElement>(null);
   const introduceRef = useRef<HTMLTextAreaElement>(null);
-
-  const queryClient = useQueryClient();
-  const [profileImage, setProfileImage] = useState<string | null>(null);
+  const [file, setFile] = useState<File | null>(null);
   const [editToggle, setEditToggle] = useState<EditToggle>({
     userName: false,
     email: false,
@@ -40,13 +43,25 @@ function Profile() {
     introduce: undefined,
   });
 
-  const { data, error } = useQuery<UserData, AxiosError>({
+  const queryClient = useQueryClient();
+  const { data, error } = useQuery<UserData>({
     queryKey: ['getprofile'],
     queryFn: fetchUserProfile,
   });
-
-  const { mutate } = useMutation({
+  const { mutate: userDataMutate } = useMutation({
     mutationFn: updateUserProfile,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['getprofile'] });
+    },
+  });
+  const { mutate: profileImgMutate } = useMutation({
+    mutationFn: updateProfileImg,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['getprofile'] });
+    },
+  });
+  const { mutate: userNameMutate } = useMutation({
+    mutationFn: updateUserName,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['getprofile'] });
     },
@@ -55,39 +70,54 @@ function Profile() {
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setProfileImage(reader.result as string);
-      };
-      reader.readAsDataURL(file);
+      setFile(file);
+      uploadImage(file);
+      e.target.value = '';
     }
   };
-
+  // Firebase에 이미지 업로드 후 URL 설정
+  const uploadImage = async (file: File) => {
+    try {
+      const url = await uploadImageToFirebase(file);
+      setUserData({ profileImg: url });
+      profileImgMutate({ newProfileImg: url });
+    } catch (error) {
+      console.error('Error uploading image:', error);
+    }
+  };
+  // 이미지 삭제 처리
   const handleImageDelete = () => {
-    setProfileImage(null);
+    setFile(null);
+    setUserData({ profileImg: '' });
+    profileImgMutate({ newProfileImg: '' });
   };
 
   const handleIntroduceChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    setUserData({
-      ...userData,
+    setUserData((prevUserData) => ({
+      ...prevUserData,
       introduce: e.target.value,
-    });
+    }));
   };
 
   const handleUserNameChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setUserData({
-      ...userData,
+    setUserData((prevUserData) => ({
+      ...prevUserData,
       userName: e.target.value,
-    });
+    }));
   };
 
   const handleGitUrlChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setUserData({
-      ...userData,
+    setUserData((prevUserData) => ({
+      ...prevUserData,
       gitUrl: e.target.value,
-    });
+    }));
   };
-
+  const handleDeleteAccount = async () => {
+    const confirmed = window.confirm('정말로 회원 탈퇴를 하시겠습니까?');
+    if (confirmed) {
+      //
+    }
+  };
   const handleEditToggle = (
     key: keyof EditToggle,
     ref: RefObject<HTMLInputElement | HTMLTextAreaElement>,
@@ -118,12 +148,12 @@ function Profile() {
   }
 
   return (
-    <>
-    <Header />
+    <div>
+      <Header />
       <Container>
         <ProfileSection>
           <ProfileColumn>
-            <ProfileImage src={profileImage || defaultProfile} />
+            <ProfileImage src={userData.profileImg || defaultProfile} />
             <ImageUploadButton>
               <label htmlFor="fileInput">이미지 업로드</label>
               <FileInput
@@ -144,7 +174,7 @@ function Profile() {
                 <SaveButton
                   onClick={() => {
                     handleEditToggle('introduce', introduceRef);
-                    mutate(userData);
+                    userDataMutate({ newIntroduce: userData.introduce });
                   }}
                 >
                   저장
@@ -185,7 +215,7 @@ function Profile() {
                 onChange={handleUserNameChange}
                 onSave={() => {
                   handleEditToggle('userName', userNameRef);
-                  mutate(userData);
+                  userNameMutate({ newUserName: userData.userName });
                 }}
                 placeholder="수정할 닉네임"
               />
@@ -206,7 +236,7 @@ function Profile() {
                 onChange={handleGitUrlChange}
                 onSave={() => {
                   handleEditToggle('gitUrl', gitUrlRef);
-                  mutate(userData);
+                  userDataMutate({ newGitUrl: userData.gitUrl });
                 }}
                 placeholder="수정할 Github URL"
               />
@@ -220,12 +250,15 @@ function Profile() {
           <EditSection>
             <Label>회원탈퇴</Label>
             <EditSection>
-              <UserDeleteButton>회원 탈퇴</UserDeleteButton>
+              <UserDeleteButton onClick={handleDeleteAccount}>
+                회원 탈퇴
+              </UserDeleteButton>
             </EditSection>
           </EditSection>
         </EditSectionsContainer>
+        <APItest />
       </Container>
-    </>
+    </div>
   );
 }
 
@@ -236,8 +269,9 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 100px;
+  justify-content: center;
   background-color: #ffffff;
+  margin-top: 22vh;
 `;
 
 const ProfileSection = styled.div`
@@ -298,7 +332,7 @@ const EditSection = styled.div`
 const Label = styled.label`
   width: 104px;
   height: 21px;
-  font-family: 'MangoDdobak';
+  font-family: 'MangoRegular';
   font-style: normal;
   font-weight: 400;
   font-size: 13px;
@@ -315,7 +349,7 @@ const IntroduceHeader = styled.div`
 const IntroduceHeaderText = styled.div`
   font-style: normal;
   font-weight: 400;
-  font-family: 'MangoDdobak';
+  font-family: 'MangoRegular';
   font-size: 13px;
   line-height: 20px;
   color: #001354;
@@ -324,7 +358,7 @@ const IntroduceBox = styled.div`
   padding: 10px;
   font-style: normal;
   font-weight: 400;
-  font-family: 'MangoDdobak';
+  font-family: 'MangoRegular';
   font-size: 14px;
   line-height: 20px;
   box-sizing: border-box;
@@ -354,7 +388,7 @@ const IntroduceTextarea = styled.textarea`
   border: 1px solid #ffffff;
   border-radius: 4px;
   padding: 10px;
-  font-family: 'MangoDdobak';
+  font-family: 'MangoRegular';
   font-weight: 400;
   font-size: 14px;
   line-height: 18px;
@@ -369,7 +403,7 @@ const IntroduceTextarea = styled.textarea`
 const ImageUploadButton = styled.button`
   margin-top: 10px;
   font-style: normal;
-  font-family: 'MangoDdobak';
+  font-family: 'MangoRegular';
   font-weight: 400;
   font-size: 13px;
   line-height: 20px;
@@ -393,7 +427,7 @@ const ImageDeleteButton = styled.button`
   height: 21px;
   font-style: normal;
   font-weight: 400;
-  font-family: 'MangoDdobak';
+  font-family: 'MangoRegular';
   font-size: 13px;
   line-height: 20px;
   color: #555555;
@@ -414,7 +448,7 @@ const IntroduceEditButton = styled.button`
   background: #ffffff;
   font-style: normal;
   font-weight: 400;
-  font-family: 'MangoDdobak';
+  font-family: 'MangoRegular';
   font-size: 13px;
   line-height: 20px;
   color: #001354;
@@ -438,7 +472,7 @@ const PasswordEditButton = styled(Link)`
   align-items: center;
   justify-content: center;
   border-radius: 10px;
-  font-family: 'MangoDdobak';
+  font-family: 'MangoRegular';
   font-style: normal;
   font-weight: 400;
   font-size: 13px;
@@ -452,21 +486,6 @@ const PasswordEditButton = styled(Link)`
   }
   color: #001354;
 `;
-const EditButton = styled.button`
-  box-sizing: border-box;
-  width: 50px;
-  height: 30px;
-  background: #001354;
-  border: 1px solid #ffffff;
-  border-radius: 5px;
-  font-family: 'MangoDdobak';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 13px;
-  line-height: 20px;
-  color: #ffffff;
-  margin-left: 45px;
-`;
 
 const SaveButton = styled.button`
   box-sizing: border-box;
@@ -477,7 +496,7 @@ const SaveButton = styled.button`
   border: 1px solid #001354;
   border-radius: 5px;
   margin-left: 45px;
-  font-family: 'MangoDdobak';
+  font-family: 'MangoRegular';
   font-style: normal;
   font-weight: 400;
   font-size: 13px;
@@ -494,7 +513,7 @@ const UserDeleteButton = styled.button`
 
   border-radius: 5px;
 
-  font-family: 'MangoDdobak';
+  font-family: 'MangoRegular';
   font-style: normal;
   font-weight: 100;
   font-size: 13px;
