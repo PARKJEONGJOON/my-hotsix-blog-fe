@@ -49,14 +49,12 @@ function Post() {
       ...postData,
       description: extractTextFromHTML(postData.content),
     });
-
-    if (postData.showStatus === undefined) {
-      notify('공개/비공개 선택이 필요합니다.');
-    } else if (!postData.title?.trim()) {
+    if (!postData.title?.trim()) {
       notify('제목을 입력해주세요.');
-      console.log(postData.description);
     } else if (!extractTextFromHTML(postData.content).trim()) {
       notify('내용을 입력해주세요.');
+    } else if (postData.showStatus === undefined) {
+      notify('공개/비공개 선택이 필요합니다.');
     } else {
       registerPostMutate(postData);
       navigate('/home');

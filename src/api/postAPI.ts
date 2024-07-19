@@ -17,3 +17,22 @@ export const registerPost = async (postData: PostData) => {
     }
   }
 };
+
+export const getPosts = async () => {
+  try {
+    const response = await axios.get('/api/posts', {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    return response.data.posts;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      if (error.response) {
+        console.log(error.response.data.error);
+      } else {
+        console.log(error.message);
+      }
+    }
+  }
+};
