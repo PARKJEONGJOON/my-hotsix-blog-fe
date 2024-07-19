@@ -90,7 +90,7 @@ function Editor() {
   return (
     <div className="flex flex-col items-center">
       <ReactQuill
-        className="w-[620px] h-full md:h-[calc(100vh-250px)] lg:h-[calc(100vh-250px)]"
+        className="w-[40vw] h-full md:h-[calc(100vh-250px)] lg:h-[calc(100vh-250px)]"
         value={postData.content || ''}
         theme="snow"
         modules={modules}

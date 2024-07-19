@@ -6,7 +6,7 @@ import axios from 'axios';
 import { useMutation } from '@tanstack/react-query';
 import { resetPassword } from '../../api/userAPI';
 import { useNavigate } from 'react-router-dom';
-import { ValidateEmail } from '../../types/validateEmail';
+import { ValidateEmail } from '../../types/ValidateEmail';
 
 function PasswordEdit() {
   const [showCode, setShowCode] = useState<boolean>(false);

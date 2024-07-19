@@ -2,10 +2,10 @@ import { create } from 'zustand';
 import { PostData } from '../types/Post';
 
 interface PostsState {
-  posts: PostData[];
-  setPosts: (posts: PostData[]) => void;
+  postDetail: PostData;
+  setPostDetail: (posts: PostData) => void;
 }
-export const usePostsStore = create<PostsState>((set) => ({
-  posts: [],
-  setPosts: (posts) => set({ posts }),
+export const usePostDetailStore = create<PostsState>((set) => ({
+  postDetail: { content: '' },
+  setPostDetail: (postDetail) => set({ postDetail }),
 }));

@@ -8,8 +8,9 @@ export interface PostData {
   updatedAt?: string;
   author?: string;
   id?: number;
+  likeCount?: number;
 }
 export interface PostsState {
-  posts: PostData[];
-  setPosts: (posts: PostData[]) => void;
+  postDetail: PostData;
+  setPosts: (postDEtail: PostData) => void;
 }

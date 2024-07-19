@@ -6,14 +6,24 @@ import PrivateButton from '../../components/Post/PrivateButton';
 import { uploadImageToFirebase } from '../../Firebase';
 import { usePostStore } from '../../store';
 import { extractTextFromHTML } from '../../utils/extractTextFromHtml';
-import { useMutation } from '@tanstack/react-query';
-import { registerPost } from '../../api/postAPI';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { editPost, registerPost } from '../../api/postAPI';
 import { notify } from '../../components/Notice/Toast';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { PostData } from '../../types/Post';
 
-function Post() {
+const PostEdit = () => {
+  const queryClient = useQueryClient();
   const navigate = useNavigate();
   const { postData, setPostData } = usePostStore();
+  const { id } = useParams<{ id: string }>();
+  const cachedPost = queryClient.getQueryData(['postdetail', Number(id)]);
+
+  useEffect(() => {
+    if (cachedPost) {
+      setPostData(cachedPost as PostData); // 타입 단언
+    }
+  }, [cachedPost]);
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -22,8 +32,8 @@ function Post() {
     }
   };
 
-  const { mutate: registerPostMutate } = useMutation({
-    mutationFn: registerPost,
+  const { mutate: editPostMutate } = useMutation({
+    mutationFn: editPost,
   });
 
   const uploadImage = async (file: File) => {
@@ -42,7 +52,7 @@ function Post() {
     const newTitle = event.target.value;
     setPostData({ ...postData, title: newTitle });
   };
-  const handleRegister = () => {
+  const handleEdit = () => {
     // 필요한 데이터를 포함하여 mutate 함수 호출
 
     setPostData({
@@ -56,8 +66,8 @@ function Post() {
     } else if (postData.showStatus === undefined) {
       notify('공개/비공개 선택이 필요합니다.');
     } else {
-      registerPostMutate(postData);
-      notify('게시글 생성 완료');
+      editPostMutate(postData);
+      notify('게시글 수정 완료');
       setPostData({
         thumb: '',
         title: '',
@@ -77,13 +87,14 @@ function Post() {
             className="text-xl mt-3 mb-2 w-[40vw] border-b-2 border-gray focus:outline-none text-g"
             placeholder="제목"
             onChange={handleTitleChange}
+            value={postData.title}
           />
           <Editor />
           <div className="flex flex-row">
             <img
               alt="썸네일 이미지"
               src={postData.thumb || defaultThumb}
-              className="flex flex-col w-60 h-16 mt-14 border-gray border-2 rounded-sm"
+              className="flex flex-col w-[8vw] h-16 mt-14 border-gray border-2 rounded-sm"
             />
             <div className="flex flex-col  mt-14">
               <button className="w-28 h-6 ml-6 border-gray border-2 mb-[7px] rounded-sm font-MangoRegular  text-sm m hover:bg-slate-50 transition-colors">
@@ -98,7 +109,7 @@ function Post() {
               </button>
               <button
                 onClick={handleImageDelete}
-                className="w-28 h-6 ml-6 border-gray border-2 mt-[7px] rounded-sm font-MangoRegular text-sm hover:bg-slate-50 transition-colors"
+                className=" h-6 ml-6 border-gray border-2 mt-[7px] rounded-sm font-MangoRegular text-sm hover:bg-slate-50 transition-colors"
               >
                 썸네일 제거
               </button>
@@ -107,10 +118,10 @@ function Post() {
             <div className="flex flex-col ml-2 mt-14">
               <PrivateButton />
               <button
-                onClick={handleRegister}
+                onClick={handleEdit}
                 className="bg-darkblue text-xl text-white border-2 mt-[0px] rounded-md ml-4 border-darkblue font-MangoRegular  hover:bg-blue-900"
               >
-                등&nbsp;&nbsp;&nbsp;록
+                수&nbsp;&nbsp;&nbsp;정
               </button>
             </div>
           </div>
@@ -118,6 +129,6 @@ function Post() {
       </div>
     </div>
   );
-}
+};
 
-export default Post;
+export default PostEdit;
