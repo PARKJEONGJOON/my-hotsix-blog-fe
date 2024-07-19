@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "proxy": "http://223.130.154.175:3000",
   "private": true,
-  "proxy": "http://localhost:5000",
   "dependencies": {
     "@tanstack/react-query": "^5.49.2",
     "@tanstack/react-query-devtools": "^5.49.2",
