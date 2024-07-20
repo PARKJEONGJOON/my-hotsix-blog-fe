@@ -17,7 +17,10 @@ const PostEdit = () => {
   const navigate = useNavigate();
   const { postData, setPostData } = usePostStore();
   const { id } = useParams<{ id: string }>();
-  const cachedPost = queryClient.getQueryData(['postdetail', Number(id)]);
+  const cachedPost: PostData | undefined = queryClient.getQueryData([
+    'postdetail',
+    Number(id),
+  ]);
 
   useEffect(() => {
     if (cachedPost) {
@@ -87,13 +90,13 @@ const PostEdit = () => {
             className="text-xl mt-3 mb-2 w-[40vw] border-b-2 border-gray focus:outline-none text-g"
             placeholder="제목"
             onChange={handleTitleChange}
-            value={postData.title}
+            value={cachedPost?.title}
           />
           <Editor />
           <div className="flex flex-row">
             <img
               alt="썸네일 이미지"
-              src={postData.thumb || defaultThumb}
+              src={cachedPost?.thumb || defaultThumb}
               className="flex flex-col w-[8vw] h-16 mt-14 border-gray border-2 rounded-sm"
             />
             <div className="flex flex-col  mt-14">

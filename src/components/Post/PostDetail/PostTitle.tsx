@@ -30,7 +30,7 @@ const PostTitle: React.FC<{
       <div className="flex-row flex justify-between">
         <div className="flex-row flex">
           <div className="text-black font-black">{author}</div>
-          <div className="font-light"> · {updatedAt?.slice(0, 10)}</div>
+          <div className="font-light"> ㅤ {updatedAt?.slice(0, 10)}</div>
           {!showStatus ? (
             <div className="rounded-md font-bold text-xs p-1 ml-2 text-white bg-darkblue">
               비공개

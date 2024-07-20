@@ -10,6 +10,8 @@ import { useGetComments } from '../../queries/useGetComments';
 import { CommentData } from '../../types/Comment';
 import Comment from '../../components/Post/PostDetail/Comment';
 import { useDeletePost } from '../../queries/useDeletePost';
+import AddComment from '../../components/Post/PostDetail/AddComment';
+import EditComment from '../../components/Post/PostDetail/EditComment';
 
 const PostDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -54,6 +56,7 @@ const PostDetail = () => {
       ) : (
         <div className="text-xl mt-10 font-black"></div>
       )}
+      <AddComment />
     </div>
   );
 };
