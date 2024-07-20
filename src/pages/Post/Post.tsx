@@ -69,6 +69,7 @@ function Post() {
   };
 
   return (
+
     <div>
       <Header />
       <div className=" flex justify-center">
@@ -116,7 +117,7 @@ function Post() {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 

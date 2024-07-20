@@ -1,16 +1,18 @@
 // 더미 데이터
+
 type DemoData = {
     id: number;
     title: string; 
     content: string; 
-    thumb?: string
+    thumb?: string;
 }
 
 const DemoData = [
     {
         id: 1,
         title: "Link vs NavLink vs useNavigation() 비교",
-        content: "리액트는 React Router를 사용해 페이지를 이동한다. 이때 사용할 수 있는 몇 가지 방법이 있는데 이에 대해서 알아보고자 한다.Link는 html의 a태그처럼 링크를 연결해주지만 url 개념과는 다른 path 개념이다. to라는 속성에 내가 원하는 경로를 넣어준다."
+        content: "리액트는 React Router를 사용해 페이지를 이동한다. 이때 사용할 수 있는 몇 가지 방법이 있는데 이에 대해서 알아보고자 한다.Link는 html의 a태그처럼 링크를 연결해주지만 url 개념과는 다른 path 개념이다. to라는 속성에 내가 원하는 경로를 넣어준다.",
+        thumb: 'https://cdn-icons-png.flaticon.com/512/3875/3875148.png'
     },
     {
         id: 2,
@@ -27,6 +29,22 @@ const DemoData = [
     {
         id: 4,
         title: "엄청 매우 긴 제목을 만들어 [React Router] Link vs NavLink vs useNavigation() 비교",
+        content: "리액트는 React Router를 사용해 페이지를 이동한다. 이때 사용할 수 있는 몇 가지 방법이 있는데 이에 대해서 알아보고자 한다.Link는 html의 a태그처럼 링크를 연결해주지만 url 개념과는 다른 path 개념이다. to라는 속성에 내가 원하는 경로를 넣어준다.",
+        thumb: ''
+    },
+    {
+        id: 5,
+        title: "엄청 매우 긴 제목을 만들어 [React Router] Link vs NavLink vs useNavigation() 비교",
+        content: "리액트는 React Router를 사용해 페이지를 이동한다. 이때 사용할 수 있는 몇 가지 방법이 있는데 이에 대해서 알아보고자 한다.Link는 html의 a태그처럼 링크를 연결해주지만 url 개념과는 다른 path 개념이다. to라는 속성에 내가 원하는 경로를 넣어준다."
+    },
+    {
+        id: 6,
+        title: "엄청 매우 긴 제목을 만들어 [React Router] Link vs NavLink vs useNavigation() 비교",
+        content: "리액트는 React Router를 사용해 페이지를 이동한다. 이때 사용할 수 있는 몇 가지 방법이 있는데 이에 대해서 알아보고자 한다.Link는 html의 a태그처럼 링크를 연결해주지만 url 개념과는 다른 path 개념이다. to라는 속성에 내가 원하는 경로를 넣어준다."
+    },
+    {
+        id: 7,
+        title: "7번째 데이터 (스크롤시 나오도록 구현)",
         content: "리액트는 React Router를 사용해 페이지를 이동한다. 이때 사용할 수 있는 몇 가지 방법이 있는데 이에 대해서 알아보고자 한다.Link는 html의 a태그처럼 링크를 연결해주지만 url 개념과는 다른 path 개념이다. to라는 속성에 내가 원하는 경로를 넣어준다."
     },
 ]

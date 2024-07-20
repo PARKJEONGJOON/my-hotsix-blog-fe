@@ -13,8 +13,9 @@ module.exports = {
       },
       width: {
         signupInput: '25rem',
-        '250': '62.5rem',
-        '186': '46.25rem'
+        postWidth: '48rem',
+        postHeight: '37rem',
+        postInnerWidth: '33rem',
       },
       maxWidth: {
         pc: '1440px',

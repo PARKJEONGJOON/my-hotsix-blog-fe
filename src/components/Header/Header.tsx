@@ -1,3 +1,5 @@
+
+import search from '../../assets/images/search.png';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import defaultProfile from '../../assets/images/defaultProfile.png';
 import { Link, useNavigate } from 'react-router-dom';
@@ -7,6 +9,10 @@ import { logOut } from '../../api/userAPI';
 interface Props {
   // user정보 받아오게 되면 optional 해젠
   userName?: string;
+}
+
+const handleLogout = () => {
+  localStorage.removeItem('auth-cookie');
 }
 
 const Header = ({ userName = 'Hotsix' }: Props) => {
@@ -23,14 +29,24 @@ const Header = ({ userName = 'Hotsix' }: Props) => {
     },
   });
   return (
-    <header className="w-full px-60 py-2 border-b-2 border-skyblue shadow flex justify-between items-center">
-      <div className="text-3xl text-darkblue font-MangoBold font-black">
+    <header className="w-full py-4 border-b-2 border-skyblue shadow flex justify-center items-center whitespace-nowrap">
+      <div className="text-3xl text-darkblue bold mr-72">
         <Link to="/">{userName}'s Blog</Link>
       </div>
-      <div className="w-92.5 h-15 flex space-x-7 items-center space-x-">
-        <button className="w-32.5 h-13.5 text-sm px-1 py-1.5 border-solid border-[1px] border-darkblue rounded-lg text-darkblue font-MangoRegular">
+      
+      <div className="w-120 h-15 pl-20 flex space-x-4 items-center ml-72">
+        <Link to="/search">
+          <img src={search} className="w-9 h-9" />
+        </Link>
+
+        <button className="w-24 h-11 text-small px-1 py-1.5 border-solid border-2 border-darkblue rounded-[15px] text-darkblue font-MangoRegular">
+          <Link to="/">내 블로그</Link>
+        </button>
+        
+        <button className="w-24 h-11 text-small px-1 py-1.5 border-solid border-2 border-darkblue rounded-[15px] text-darkblue font-MangoRegular">
           <Link to="/post">새 글 작성</Link>
         </button>
+
         <Link to="/profile">
           <img
             src={profileImageUrl}
