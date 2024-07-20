@@ -27,7 +27,6 @@ function Profile() {
   const userNameRef = useRef<HTMLInputElement>(null);
   const gitUrlRef = useRef<HTMLInputElement>(null);
   const introduceRef = useRef<HTMLTextAreaElement>(null);
-  const [file, setFile] = useState<File | null>(null);
   const [editToggle, setEditToggle] = useState<EditToggle>({
     userName: false,
     email: false,
@@ -70,7 +69,6 @@ function Profile() {
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      setFile(file);
       uploadImage(file);
       e.target.value = '';
     }
@@ -87,7 +85,6 @@ function Profile() {
   };
   // 이미지 삭제 처리
   const handleImageDelete = () => {
-    setFile(null);
     setUserData({ profileImg: '' });
     profileImgMutate({ newProfileImg: '' });
   };

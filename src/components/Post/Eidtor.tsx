@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useMemo, useRef } from 'react';
 import ReactQuill, { Quill } from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { ImageActions } from '@xeger/quill-image-actions';
@@ -9,7 +9,6 @@ import { usePostStore } from '../../store';
 Quill.register('modules/imageActions', ImageActions);
 Quill.register('modules/imageFormats', ImageFormats);
 function Editor() {
-  const [value, setValue] = useState('');
   const { postData, setPostData } = usePostStore();
   const quillRef = useRef<ReactQuill>(null);
 
@@ -37,7 +36,6 @@ function Editor() {
   };
 
   const handleEditorChange = (value: string) => {
-    setValue(value);
     setPostData({ ...postData, content: value });
   };
 
@@ -92,7 +90,7 @@ function Editor() {
   return (
     <div className="flex flex-col items-center">
       <ReactQuill
-        className="w-[620px] h-full md:h-[calc(100vh-250px)] lg:h-[calc(100vh-250px)]"
+        className="w-[40vw] h-full md:h-[calc(100vh-250px)] lg:h-[calc(100vh-250px)]"
         value={postData.content || ''}
         theme="snow"
         modules={modules}
