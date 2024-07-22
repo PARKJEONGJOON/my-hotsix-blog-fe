@@ -25,7 +25,7 @@ const EditButton = styled.button`
   background: #001354;
   border: 1px solid #ffffff;
   border-radius: 5px;
-  font-family: 'MangoDdobak-B';
+  font-family: 'MangoBold';
   font-style: normal;
   font-weight: 400;
   font-size: 13px;

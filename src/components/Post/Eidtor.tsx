@@ -5,11 +5,14 @@ import { ImageActions } from '@xeger/quill-image-actions';
 import { ImageFormats } from '@xeger/quill-image-formats';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { storage } from '../../Firebase';
+import { usePostStore } from '../../store';
+Quill.register('modules/imageActions', ImageActions);
+Quill.register('modules/imageFormats', ImageFormats);
 function Editor() {
   const [value, setValue] = useState('');
+  const { postData, setPostData } = usePostStore();
   const quillRef = useRef<ReactQuill>(null);
-  Quill.register('modules/imageActions', ImageActions);
-  Quill.register('modules/imageFormats', ImageFormats);
+
   const editorImageHandler = () => {
     const input = document.createElement('input');
     input.setAttribute('type', 'file');
@@ -23,17 +26,19 @@ function Editor() {
         const storageRef = ref(storage, `image/${Date.now()}`);
         await uploadBytes(storageRef, file as File).then((snapshot) => {
           getDownloadURL(snapshot.ref).then((url) => {
-            {
-              editor.insertEmbed(range.index, 'image', url);
-              editor.setSelection(range.index + 1, 0);
-              console.log('url :', url);
-            }
+            editor.insertEmbed(range.index, 'image', url);
+            editor.setSelection(range.index + 1, 0);
           });
         });
       } catch (error) {
         console.log(error);
       }
     });
+  };
+
+  const handleEditorChange = (value: string) => {
+    setValue(value);
+    setPostData({ ...postData, content: value });
   };
 
   const toolbarOptions = [
@@ -87,15 +92,15 @@ function Editor() {
   return (
     <div className="flex flex-col items-center">
       <ReactQuill
-        style={{ height: '500px', width: '650px' }}
-        value={value || ''}
+        className="w-[620px] h-full md:h-[calc(100vh-250px)] lg:h-[calc(100vh-250px)]"
+        value={postData.content || ''}
         theme="snow"
         modules={modules}
         formats={formats}
-        onChange={setValue}
+        onChange={handleEditorChange}
         ref={quillRef}
       />
     </div>
   );
-};
+}
 export default Editor;

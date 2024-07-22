@@ -1,17 +1,33 @@
-import userIcon from '../../assets/images/user.svg';
+
 import search from '../../assets/images/search.png';
-import { Link } from 'react-router-dom';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import defaultProfile from '../../assets/images/defaultProfile.png';
+import { Link, useNavigate } from 'react-router-dom';
+import { UserData } from '../../types/UserData';
+import { logOut } from '../../api/userAPI';
 
 interface Props {
   // user정보 받아오게 되면 optional 해젠
   userName?: string;
-};
+}
 
 const handleLogout = () => {
   localStorage.removeItem('auth-cookie');
 }
 
 const Header = ({ userName = 'Hotsix' }: Props) => {
+  const queryClient = useQueryClient();
+  const userData = queryClient.getQueryData<UserData>(['getprofile']);
+  const profileImageUrl = userData?.profileImg || defaultProfile;
+  userName = userData?.userName || 'Hotsix';
+  const navigate = useNavigate();
+  const { mutate: logoutMutate } = useMutation({
+    mutationFn: logOut,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['getprofile'] });
+      navigate('/login');
+    },
+  });
   return (
     <header className="w-full py-4 border-b-2 border-skyblue shadow flex justify-center items-center whitespace-nowrap">
       <div className="text-3xl text-darkblue bold mr-72">
@@ -30,13 +46,19 @@ const Header = ({ userName = 'Hotsix' }: Props) => {
         <button className="w-24 h-11 text-small px-1 py-1.5 border-solid border-2 border-darkblue rounded-[15px] text-darkblue font-MangoRegular">
           <Link to="/post">새 글 작성</Link>
         </button>
-        
+
         <Link to="/profile">
-          <img src={userIcon} className="w-9 h-9" />
+          <img
+            src={profileImageUrl}
+            className="w-8 h-8 cursor-pointer rounded-full"
+            alt="User Icon"
+          />
         </Link>
-        
-        <button className="text-darkblue text-small font-MangoRegular" onClick={handleLogout}>
-        <Link to="/login">로그아웃</Link>
+        <button
+          className="text-darkblue text-regular font-MangoRegular text-sm"
+          onClick={() => logoutMutate()}
+        >
+          로그아웃
         </button>
       </div>
     </header>

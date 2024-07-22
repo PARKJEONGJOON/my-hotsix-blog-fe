@@ -27,7 +27,7 @@ const SaveButton = styled.button`
   border: 1px solid #001354;
   border-radius: 5px;
   margin-left: 45px;
-  font-family: 'MangoDdobak';
+  font-family: 'MangoBold';
   font-style: normal;
   font-weight: 400;
   font-size: 13px;

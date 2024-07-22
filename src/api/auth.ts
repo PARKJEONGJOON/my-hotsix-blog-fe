@@ -1,7 +1,7 @@
 import axiosInstance from './axiosInstance';
 
 export interface LoginData {
-  email: string;
+  userId: string;
   password: string;
 }
 
@@ -65,6 +65,7 @@ export const sideUser = async () => {
   const response = await axiosInstance.get('/api/users');
   return response.data;
 };
+<<<<<<< HEAD
 
 export const fetchPosts = async (page: number, pageSize: number, totalItems: number, totalPages: number): Promise<FetchPostsResponse> => {
   const response = await axiosInstance.get(`/posts`);
@@ -78,3 +79,5 @@ export const fetchPosts = async (page: number, pageSize: number, totalItems: num
     },
   };
 };
+=======
+>>>>>>> 58a2224624ad51ad7eb265bb52e19c7774f4c416
