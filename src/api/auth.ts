@@ -20,6 +20,27 @@ export interface sideUserData {
   introduce?: string;
 }
 
+export interface PostData {
+  id: number;
+  author: string;
+  thumb: string;
+  title: string;
+  description: string;
+  createdAt: string;
+  updatedAt: string;
+  showStatus: boolean;
+}
+
+export interface FetchPostsResponse {
+  posts: PostData[];
+  pagination: {
+    totalItems: number;
+    currentPage: number;
+    totalPages: number;
+    pageSize: number;
+  };
+}
+
 export const login = async (data: LoginData) => {
   const response = await axiosInstance.post('/api/users/login', data);
   return response.data;
@@ -44,3 +65,19 @@ export const sideUser = async () => {
   const response = await axiosInstance.get('/api/users');
   return response.data;
 };
+<<<<<<< HEAD
+
+export const fetchPosts = async (page: number, pageSize: number, totalItems: number, totalPages: number): Promise<FetchPostsResponse> => {
+  const response = await axiosInstance.get(`/posts`);
+  return {
+    posts: response.data,
+    pagination: {
+      totalItems,
+      currentPage: page,
+      totalPages,
+      pageSize,
+    },
+  };
+};
+=======
+>>>>>>> 58a2224624ad51ad7eb265bb52e19c7774f4c416
