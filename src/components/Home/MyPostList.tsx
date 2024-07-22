@@ -3,10 +3,10 @@ import { fetchPosts, PostData } from '../../api/auth';
 import Post from './Post';
 import { useInView } from 'react-intersection-observer';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { getPosts } from '../../api/postAPI';
+import { getMyPosts, getPosts } from '../../api/postAPI';
 import { Link } from 'react-router-dom';
 
-const PostList: React.FC = () => {
+const MyPostList: React.FC = () => {
   const [posts, setPosts] = useState<PostData[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(3);
@@ -24,7 +24,7 @@ const PostList: React.FC = () => {
     status,
   } = useInfiniteQuery({
     queryKey: ['infinitePosts'],
-    queryFn: getPosts,
+    queryFn: getMyPosts,
     initialPageParam: 1,
     getNextPageParam: (lastPage, pages) => {
       return pages.length < lastPage.pagination.totalPages
@@ -135,4 +135,4 @@ const PostList: React.FC = () => {
   );
 };
 
-export default PostList;
+export default MyPostList;

@@ -3,6 +3,9 @@ import defaultProfile from '../../../assets/images/defaultProfile.png';
 import { PlusCircleOutlined } from '@ant-design/icons';
 import { useAddComment } from '../../../queries/useAddComment';
 import { usePostDetailStore } from '../../../stores/postsStore';
+import { useQuery } from '@tanstack/react-query';
+import { UserData } from '../../../types/UserData';
+import { fetchUserProfile } from '../../../api/userAPI';
 
 const AddComment = () => {
   const [comment, setComment] = useState<string>('');
@@ -11,7 +14,10 @@ const AddComment = () => {
   const handleCommentChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setComment(e.target.value);
   };
-
+  const { data: userData } = useQuery<UserData>({
+    queryKey: ['getprofile'],
+    queryFn: fetchUserProfile,
+  });
   return (
     <div className="flex justify-between w-[38vw] my-4 border-t-[2px] border-t-stone-200 pt-8">
       <div className="flex ">
@@ -20,7 +26,7 @@ const AddComment = () => {
           src={defaultProfile}
         />
         <div className="flex flex-col ml-3">
-          <div className="text-lg font-black">박정준</div>
+          <div className="text-lg font-black">{userData?.userName}</div>
         </div>
       </div>
 

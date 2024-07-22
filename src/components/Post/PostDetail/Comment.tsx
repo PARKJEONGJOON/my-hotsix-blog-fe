@@ -30,6 +30,7 @@ const Comment: React.FC<{
   const handleCommentChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setNewComment(e.target.value);
   };
+
   const [commentToggle, setCommentToggle] = useState<boolean>(false);
   const commentRef = useRef<HTMLTextAreaElement>(null);
   useEffect(() => {
@@ -43,7 +44,7 @@ const Comment: React.FC<{
           src={defaultProfile}
         />
         <div className="flex flex-col ml-3">
-          <div className="text-lg font-black">박정준</div>
+          <div className="text-lg font-black">gom</div>
         </div>
       </div>
 
@@ -87,7 +88,7 @@ const Comment: React.FC<{
           src={defaultProfile}
         />
         <div className="flex flex-col ml-3">
-          <div className="text-lg font-black">박정준</div>
+          <div className="text-lg font-black">gom</div>
           <div className="text-xs">{comment.updatedAt.slice(0, 10)}</div>
         </div>
       </div>

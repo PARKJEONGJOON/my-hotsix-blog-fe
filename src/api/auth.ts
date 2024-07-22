@@ -1,3 +1,4 @@
+import axios from 'axios';
 import axiosInstance from './axiosInstance';
 
 export interface LoginData {
@@ -42,7 +43,7 @@ export interface FetchPostsResponse {
 }
 
 export const login = async (data: LoginData) => {
-  const response = await axiosInstance.post('/api/users/login', data);
+  const response = await axios.post('/api/users/login', data);
   return response.data;
 };
 
@@ -59,15 +60,19 @@ export const logout = async () => {
     console.log('로그아웃 실패', error);
     return false;
   }
-}
+};
 
 export const sideUser = async () => {
   const response = await axiosInstance.get('/api/users');
   return response.data;
 };
-<<<<<<< HEAD
 
-export const fetchPosts = async (page: number, pageSize: number, totalItems: number, totalPages: number): Promise<FetchPostsResponse> => {
+export const fetchPosts = async (
+  page: number,
+  pageSize: number,
+  totalItems: number,
+  totalPages: number,
+): Promise<FetchPostsResponse> => {
   const response = await axiosInstance.get(`/posts`);
   return {
     posts: response.data,
@@ -79,5 +84,3 @@ export const fetchPosts = async (page: number, pageSize: number, totalItems: num
     },
   };
 };
-=======
->>>>>>> 58a2224624ad51ad7eb265bb52e19c7774f4c416

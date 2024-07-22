@@ -14,7 +14,7 @@ const ValidateButton: React.FC<ValidateButtonProps> = ({
   sort,
 }) => {
   return showbutton ? (
-    sort === 'cheack' ? (
+    sort === 'check' ? (
       <div>
         <img src={cheack} className="w-6 h-6" alt="" />
       </div>

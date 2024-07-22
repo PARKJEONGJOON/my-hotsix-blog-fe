@@ -29,7 +29,7 @@ const App: React.FC = () => (
         <Route path="/post" element={<Post />} />
         <Route path="/posts/:id" element={<PostDetail />} />
         <Route path="/postedit/:id" element={<PostEdit />} />
-        <Route path="/emailedit" element={<EmailEdit />} />
+
         <Route path="/search" element={<Search />} />
       </Routes>
       <Toast />

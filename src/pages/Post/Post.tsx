@@ -44,32 +44,37 @@ function Post() {
   };
   const handleRegister = () => {
     // 필요한 데이터를 포함하여 mutate 함수 호출
-
-    setPostData({
+    const updatedPostData = {
       ...postData,
       description: extractTextFromHTML(postData.content),
-    });
-    if (!postData.title?.trim()) {
+    };
+
+    setPostData(updatedPostData);
+
+    if (!updatedPostData.title?.trim()) {
       notify('제목을 입력해주세요.');
-    } else if (!extractTextFromHTML(postData.content).trim()) {
+    } else if (!extractTextFromHTML(updatedPostData.content).trim()) {
       notify('내용을 입력해주세요.');
-    } else if (postData.showStatus === undefined) {
+    } else if (updatedPostData.showStatus === undefined) {
       notify('공개/비공개 선택이 필요합니다.');
     } else {
-      registerPostMutate(postData);
+      registerPostMutate(updatedPostData);
       notify('게시글 생성 완료');
-      setPostData({
-        thumb: '',
-        title: '',
-        description: '',
-        content: '',
-      });
-      navigate('/home');
+
+      setTimeout(() => {
+        setPostData({
+          thumb: '',
+          title: '',
+          description: '',
+          content: '',
+          showStatus: undefined,
+        });
+        navigate('/home');
+      }, 1000);
     }
   };
 
   return (
-
     <div>
       <Header />
       <div className=" flex justify-center">
@@ -117,7 +122,7 @@ function Post() {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

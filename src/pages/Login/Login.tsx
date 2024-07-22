@@ -19,15 +19,18 @@ const Login: React.FC = () => {
     }
   }, [navigate]);
 
-  const mutation: UseMutationResult<any, Error, LoginData> = useMutation<any, Error, LoginData>({
-
+  const mutation: UseMutationResult<any, Error, LoginData> = useMutation<
+    any,
+    Error,
+    LoginData
+  >({
     mutationFn: login,
     onSuccess: (data) => {
       alert('로그인 성공');
-      const setCookieHeader = data.headers['Set-Cookie'];
-      if (setCookieHeader) {
-        localStorage.setItem('auth-cookie', setCookieHeader);
-      }
+      // const setCookieHeader = data.headers['Set-Cookie'];
+      // if (setCookieHeader) {
+      //   localStorage.setItem('auth-cookie', setCookieHeader);
+      // }
       navigate('/');
     },
     onError: (error: Error) => {
