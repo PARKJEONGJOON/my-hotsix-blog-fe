@@ -1,12 +1,12 @@
-import { ChangeEvent, useState, useEffect, useCallback } from 'react';
+import { ChangeEvent, useState, useCallback } from 'react';
 import { notify } from '../../components/Notice/Toast';
 import EmailInputField from '../../components/ValidateEmail/EmailInputField';
 import Timer from '../../components/ValidateEmail/Timer';
 import axios from 'axios';
-import { ValidateEmail } from '../../types/ValidateEmail';
 import { useMutation } from '@tanstack/react-query';
 import { resetPassword } from '../../api/userAPI';
 import { useNavigate } from 'react-router-dom';
+import { ValidateEmail } from '../../types/ValidateEmail';
 
 function PasswordEdit() {
   const [showCode, setShowCode] = useState<boolean>(false);

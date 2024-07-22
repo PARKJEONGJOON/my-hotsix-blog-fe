@@ -2,7 +2,6 @@ import axios from 'axios';
 import { NewUserData, UserData } from '../types/UserData';
 import { notify } from '../components/Notice/Toast';
 import { ValidateEmail } from '../types/ValidateEmail';
-import { usePostStore } from '../store';
 
 export const fetchUserProfile = async (): Promise<UserData> => {
   const response = await axios.get<UserData>('/api/users');

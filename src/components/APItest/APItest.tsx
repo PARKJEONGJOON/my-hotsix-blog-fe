@@ -1,7 +1,5 @@
-import React from 'react';
+import axios from 'axios';
 import { login } from '../../api/auth';
-import { useMutation } from '@tanstack/react-query';
-import axios, { AxiosError } from 'axios';
 
 const APItest = () => {
   const handleLogin = async () => {
@@ -18,7 +16,6 @@ const APItest = () => {
           },
         },
       );
-
       console.log(response.data);
     } catch (error: any) {
       if (error.response) {
