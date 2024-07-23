@@ -12,6 +12,7 @@ import Comment from '../../components/Post/PostDetail/Comment';
 import { useDeletePost } from '../../queries/useDeletePost';
 import AddComment from '../../components/Post/PostDetail/AddComment';
 import EditComment from '../../components/Post/PostDetail/EditComment';
+import Header from '../../components/Header/Header';
 
 const PostDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -27,36 +28,43 @@ const PostDetail = () => {
 
   console.log(currentPost);
   console.log(comments);
+
   return (
-    <div className="flex flex-col items-center mt-[8vh]">
-      <PostTitle
-        id={currentPost?.id}
-        title={currentPost?.title}
-        author={currentPost?.author}
-        updatedAt={currentPost?.updatedAt}
-        showStatus={currentPost?.showStatus}
-        likeCount={currentPost?.likeCount}
-      />
-      <ReactQuill
-        className="w-[40vw] mt-4 "
-        value={currentPost?.content}
-        readOnly={true}
-        theme={'bubble'}
-      />
-      <CommentHeader commentCount={3} likeCount={currentPost?.likeCount} />
-      {comments ? (
-        comments.length > 0 ? (
-          comments
-            .slice()
-            .reverse()
-            .map((coment: CommentData) => <Comment comment={coment} />)
+    <div>
+      <Header />
+      <div className="flex flex-col items-center mt-[8vh]">
+        <PostTitle
+          id={currentPost?.id}
+          title={currentPost?.title}
+          author={currentPost?.author}
+          updatedAt={currentPost?.updatedAt}
+          showStatus={currentPost?.showStatus}
+          likeCount={currentPost?.likeCount}
+        />
+        <ReactQuill
+          className="w-[40vw] mt-4 "
+          value={currentPost?.content}
+          readOnly={true}
+          theme={'bubble'}
+        />
+        <CommentHeader
+          commentCount={comments?.length}
+          likeCount={currentPost?.likeCount}
+        />
+        {comments ? (
+          comments.length > 0 ? (
+            comments
+              .slice()
+              .reverse()
+              .map((coment: CommentData) => <Comment comment={coment} />)
+          ) : (
+            <div className="text-xl mt-10 font-black"></div>
+          )
         ) : (
           <div className="text-xl mt-10 font-black"></div>
-        )
-      ) : (
-        <div className="text-xl mt-10 font-black"></div>
-      )}
-      <AddComment />
+        )}
+        <AddComment />
+      </div>
     </div>
   );
 };

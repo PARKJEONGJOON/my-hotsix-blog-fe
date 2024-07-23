@@ -71,7 +71,7 @@ export const getPosts = async ({ pageParam = 1 }) => {
 };
 export const getMyPosts = async ({ pageParam = 1 }) => {
   try {
-    const response = await axios.get(`/api/posts/user/id=2?page=${pageParam}`, {
+    const response = await axios.get(`/api/posts/user/2?page=${pageParam}`, {
       headers: {
         'Content-Type': 'application/json',
       },

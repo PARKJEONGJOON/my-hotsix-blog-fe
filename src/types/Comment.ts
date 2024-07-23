@@ -5,4 +5,6 @@ export interface CommentData {
   postId: number;
   createdAt: string;
   updatedAt: string;
+  profileImg: string;
+  userName: string;
 }

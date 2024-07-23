@@ -14,7 +14,7 @@ const CommentHeader: React.FC<{
   };
 
   return (
-    <div className=" w-[40vw] border-b-2 border-b-stone-200 pb-1 font-black  text-lg ">
+    <div className=" w-[40vw] border-b-2 border-b-stone-200  font-black  text-lg ">
       <div>
         {isLiked ? (
           <HeartFilled
@@ -29,7 +29,7 @@ const CommentHeader: React.FC<{
         )}
       </div>
       <span> 좋아요 {likeCount}개</span>&nbsp;&nbsp;&nbsp;댓글
-      <span className="font-black text-darkblue">{commentCount}</span>
+      <span className="font-black text-darkblue"> {commentCount}개</span>
     </div>
   );
 };

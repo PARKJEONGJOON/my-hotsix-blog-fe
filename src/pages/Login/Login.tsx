@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { useMutation, UseMutationResult } from '@tanstack/react-query';
 import { login, LoginData } from '../../api/auth';
 import useInput from '../../hooks/useInput';
+import { notify } from '../../components/Notice/Toast';
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
@@ -26,16 +27,11 @@ const Login: React.FC = () => {
   >({
     mutationFn: login,
     onSuccess: (data) => {
-      alert('로그인 성공');
-      // const setCookieHeader = data.headers['Set-Cookie'];
-      // if (setCookieHeader) {
-      //   localStorage.setItem('auth-cookie', setCookieHeader);
-      // }
-      navigate('/');
-    },
-    onError: (error: Error) => {
-      console.log(error);
-      alert('로그인 실패');
+      if (data) {
+        navigate('/');
+      } else {
+        notify('회원 정보가 일치하지 않습니다.');
+      }
     },
   });
 
@@ -76,6 +72,9 @@ const Login: React.FC = () => {
 
   const handleSignup = () => {
     navigate('/signup');
+  };
+  const handleValidateEmail = () => {
+    navigate('/passwordedit');
   };
 
   return (
@@ -129,6 +128,7 @@ const Login: React.FC = () => {
           <ButtonComponent text="회원가입" onClick={handleSignup} />
         </div>
         <h1 className="text-sm text-center">비밀번호를 잊으셨나요?</h1>
+        <ButtonComponent text="비밀번호 변경" onClick={handleValidateEmail} />
       </form>
     </div>
   );

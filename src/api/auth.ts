@@ -1,5 +1,6 @@
 import axios from 'axios';
 import axiosInstance from './axiosInstance';
+import { notify } from '../components/Notice/Toast';
 
 export interface LoginData {
   userId: string;
@@ -43,8 +44,20 @@ export interface FetchPostsResponse {
 }
 
 export const login = async (data: LoginData) => {
-  const response = await axios.post('/api/users/login', data);
-  return response.data;
+  try {
+    const response = await axios.post('/api/users/login', data);
+    notify('로그인 되었습니다.');
+
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      if (error.response) {
+        notify(error.response.data.error);
+      } else {
+        notify(error.message);
+      }
+    }
+  }
 };
 
 export const register = async (data: RegisterData) => {

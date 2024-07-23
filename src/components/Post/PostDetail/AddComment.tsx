@@ -19,7 +19,7 @@ const AddComment = () => {
     queryFn: fetchUserProfile,
   });
   return (
-    <div className="flex justify-between w-[38vw] my-4 border-t-[2px] border-t-stone-200 pt-8">
+    <div className="flex justify-between w-[38vw]  border-t-[2px] border-t-stone-200 pt-8">
       <div className="flex ">
         <img
           className="w-[55px] h-[55px] rounded-full border-[1px] "

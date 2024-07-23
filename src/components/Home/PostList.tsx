@@ -129,7 +129,9 @@ const PostList: React.FC = () => {
       ))}
       <div>
         {isFetchingNextPage && <div>Loading more...</div>}
-        {!hasNextPage && <div>No more posts</div>}
+        {!hasNextPage && (
+          <div className="flex justify-center">No more posts...</div>
+        )}
       </div>
     </div>
   );

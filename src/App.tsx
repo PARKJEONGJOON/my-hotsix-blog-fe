@@ -12,6 +12,7 @@ import Search from './pages/Search/Search';
 import Profile from './pages/Profile/Profile';
 import PostDetail from './pages/Post/PostDetail';
 import PostEdit from './pages/Post/PostEdit';
+import MyHome from './pages/Home/MyHome';
 
 const queryClient = new QueryClient();
 
@@ -20,8 +21,8 @@ const App: React.FC = () => (
     <Router>
       <ReactQueryDevtools />
       <Routes>
-        <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Home />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/home" element={<Home />} />
         <Route path="/passwordedit" element={<PasswordEdit />} />
@@ -29,7 +30,7 @@ const App: React.FC = () => (
         <Route path="/post" element={<Post />} />
         <Route path="/posts/:id" element={<PostDetail />} />
         <Route path="/postedit/:id" element={<PostEdit />} />
-
+        <Route path="/myblog" element={<MyHome />} />
         <Route path="/search" element={<Search />} />
       </Routes>
       <Toast />

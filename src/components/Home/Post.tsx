@@ -5,9 +5,16 @@ interface PostProps {
   content: string;
   thumbSrc?: string;
   likeCount?: number;
+  showStatus?: boolean;
 }
 
-const Post = ({ title, content, thumbSrc, likeCount }: PostProps) => {
+const Post = ({
+  title,
+  content,
+  thumbSrc,
+  likeCount,
+  showStatus,
+}: PostProps) => {
   return (
     <div className="w-postWidth h-postHeight border-solid border-2 border-gray rounded-2xl flex flex-row px-8 py-4 space-x-12">
       <div className="w-postInnerWidth">
@@ -15,9 +22,12 @@ const Post = ({ title, content, thumbSrc, likeCount }: PostProps) => {
           <p className="text-regular font-MangoBold mb-2 text-ellipsis overflow-hidden line-clamp-1">
             {title}
           </p>
-          <div className="flex flex-row">
-            <TiHeartOutline className="w-6 h-6" />
-            <p className="text-small ml-1">{likeCount}</p>
+          <div>
+            <div className="flex flex-row">
+              <TiHeartOutline className="w-6 h-6" />
+              <p className="text-small ml-1">{likeCount}</p>
+            </div>
+            {showStatus ? <div>비공개</div> : <></>}
           </div>
         </div>
         <p className="text-small font-MangoRegular text-ellipsis overflow-hidden line-clamp-3">

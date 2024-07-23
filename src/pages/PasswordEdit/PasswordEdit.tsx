@@ -93,7 +93,7 @@ function PasswordEdit() {
     mutationFn: resetPassword,
     onSuccess: (data) => {
       if (data.message === '비밀번호가 성공적으로 재설정되었습니다.') {
-        navigate('/profile');
+        navigate('/login');
       }
     },
   });

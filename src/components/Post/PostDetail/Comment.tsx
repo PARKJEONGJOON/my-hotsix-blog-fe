@@ -38,13 +38,13 @@ const Comment: React.FC<{
   }, []);
   return commentToggle ? (
     <div className="flex justify-between w-[38vw]  border-y-[2px] border-y-stone-200 py-8">
-      <div className="flex ">
+      <div className="flex  ">
         <img
           className="w-[55px] h-[55px] rounded-full border-[1px] "
-          src={defaultProfile}
+          src={comment.profileImg || defaultProfile}
         />
-        <div className="flex flex-col ml-3">
-          <div className="text-lg font-black">gom</div>
+        <div className="flex flex-col ml-3 ">
+          <div className="text-lg font-black ">{comment.userName}</div>
         </div>
       </div>
 
@@ -64,7 +64,7 @@ const Comment: React.FC<{
             setCommentToggle(false);
           }}
           className="flex items-cent
-          er  text-base font-normal cursor-pointer transition-transform duration-300 ease-in-out hover:scale-110 hover:text-sky-300"
+          er  text-base font-normal cursor-pointer transition-transform duration-300 ease-in-out hover:scale-105 hover:text-sky-300"
         >
           <PlusCircleOutlined className="text-3xl my-1" />
           등록
@@ -73,7 +73,7 @@ const Comment: React.FC<{
           onClick={() => {
             setCommentToggle(false);
           }}
-          className="flex items-center  text-base font-normal cursor-pointer transition-transform duration-300 ease-in-out hover:scale-110 hover:text-sky-300"
+          className="flex items-center  text-base font-normal cursor-pointer transition-transform duration-300 ease-in-out hover:scale-105 hover:text-sky-300"
         >
           <CloseCircleOutlined className="text-3xl my-1 " />
           취소
@@ -81,14 +81,16 @@ const Comment: React.FC<{
       </div>
     </div>
   ) : (
-    <div className="flex justify-between w-[38vw] my-4">
+    <div className="flex justify-between w-[38vw] my-4 ">
       <div className="flex ">
         <img
-          className="w-[55px] h-[55px] rounded-full border-[1px] "
-          src={defaultProfile}
+          className="w-[55px] h-[55px] rounded-full border-[1px]  "
+          src={comment.profileImg || defaultProfile}
         />
         <div className="flex flex-col ml-3">
-          <div className="text-lg font-black">gom</div>
+          <div className="text-lg font-black cursor-pointer transition-transform duration-300 ease-in-out hover:scale-105 hover:text-sky-300">
+            {comment.userName}
+          </div>
           <div className="text-xs">{comment.updatedAt.slice(0, 10)}</div>
         </div>
       </div>
@@ -99,14 +101,14 @@ const Comment: React.FC<{
       <div className="flex flex-col text-sm ">
         <div
           onClick={() => setCommentToggle(true)}
-          className="text-sm font-normal cursor-pointer transition-transform duration-300 ease-in-out hover:scale-110 hover:text-sky-300"
+          className="text-sm font-normal cursor-pointer transition-transform duration-300 ease-in-out hover:scale-105 hover:text-sky-300"
         >
           <FormOutlined className="text-2xl " />
           수정
         </div>
         <div
           onClick={handleDeleteComment}
-          className=" text-sm font-normal cursor-pointer transition-transform duration-300 ease-in-out hover:scale-110 hover:text-sky-300"
+          className=" text-sm font-normal cursor-pointer transition-transform duration-300 ease-in-out hover:scale-105 hover:text-sky-300"
         >
           <DeleteOutlined className="text-2xl " />
           삭제

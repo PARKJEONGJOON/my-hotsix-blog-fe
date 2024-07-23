@@ -32,7 +32,7 @@ const Header = ({ userName = 'Hotsix' }: Props) => {
   });
 
   return (
-    <header className="w-full py-4 border-b-2 border-skyblue shadow flex justify-center items-center whitespace-nowrap">
+    <header className="w-full py-4 border-b-2 border-skyblue shadow  flex justify-center items-center whitespace-nowrap">
       <div className="text-3xl text-darkblue bold mr-72">
         <Link to="/">{userName}'s Blog</Link>
       </div>
@@ -43,7 +43,7 @@ const Header = ({ userName = 'Hotsix' }: Props) => {
         </Link>
 
         <button className="w-24 h-11 text-small px-1 py-1.5 border-solid border-2 border-darkblue rounded-[15px] text-darkblue font-MangoRegular">
-          <Link to="/">내 블로그</Link>
+          <Link to="/myblog">내 블로그</Link>
         </button>
 
         <button className="w-24 h-11 text-small px-1 py-1.5 border-solid border-2 border-darkblue rounded-[15px] text-darkblue font-MangoRegular">

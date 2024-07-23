@@ -6,7 +6,7 @@ export const useDeletePost = () => {
   return useMutation({
     mutationFn: deletePost,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['postdetail,postId'] });
+      queryClient.invalidateQueries({ queryKey: ['infinitePosts'] });
     },
   });
 };
