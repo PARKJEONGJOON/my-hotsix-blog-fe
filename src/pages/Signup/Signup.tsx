@@ -9,7 +9,11 @@ import EmailInputField from '../../components/ValidateEmail/EmailInputField';
 import axios from 'axios';
 import { notify } from '../../components/Notice/Toast';
 import Timer from '../../components/ValidateEmail/Timer';
-import { ValidateEmail1 } from '../../types/ValidateEmail';
+interface ValidateEmail1 {
+  email?: string;
+  resetCode?: string;
+  newPassword?: string;
+}
 
 const Signup: React.FC = () => {
   const navigate = useNavigate();
