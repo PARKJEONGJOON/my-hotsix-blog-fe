@@ -15,6 +15,7 @@ import DisplayField from '../../components/Profile/DisplayField';
 import APItest from '../../components/APItest/APItest';
 import { uploadImageToFirebase } from '../../Firebase';
 import Header from '../../components/Header/Header';
+import { useSignOut } from '../../queries/useSignOut';
 
 interface EditToggle {
   userName: boolean;
@@ -34,7 +35,7 @@ function Profile() {
     introduce: false,
   });
   const [userData, setUserData] = useState<UserData>({
-    userId: '',
+    userId: undefined,
     password: '',
     userName: '',
     profileImg: '',
@@ -43,6 +44,7 @@ function Profile() {
   });
 
   const queryClient = useQueryClient();
+  const { mutate: signout } = useSignOut();
   const { data, error } = useQuery<UserData>({
     queryKey: ['getprofile'],
     queryFn: fetchUserProfile,
@@ -112,7 +114,7 @@ function Profile() {
   const handleDeleteAccount = async () => {
     const confirmed = window.confirm('정말로 회원 탈퇴를 하시겠습니까?');
     if (confirmed) {
-      //
+      signout();
     }
   };
   const handleEditToggle = (
@@ -253,7 +255,6 @@ function Profile() {
             </EditSection>
           </EditSection>
         </EditSectionsContainer>
-        <APItest />
       </Container>
     </div>
   );

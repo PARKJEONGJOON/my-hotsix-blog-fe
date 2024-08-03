@@ -8,10 +8,10 @@ export interface LoginData {
 }
 
 export interface RegisterData {
-  email: string;
+  userId: string;
   password: string;
-  name: string;
-  github?: string;
+  userName: string;
+  gitUrl?: string;
   introduce?: string;
 }
 
@@ -61,8 +61,20 @@ export const login = async (data: LoginData) => {
 };
 
 export const register = async (data: RegisterData) => {
-  const response = await axiosInstance.post('/api/users', data);
-  return response.data;
+  try {
+    const response = await axios.post('/api/users', data);
+    notify('회원가입 되었습니다.');
+
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      if (error.response) {
+        notify(error.response.data.error);
+      } else {
+        notify(error.message);
+      }
+    }
+  }
 };
 
 export const logout = async () => {

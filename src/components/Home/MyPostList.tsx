@@ -4,9 +4,9 @@ import Post from './Post';
 import { useInView } from 'react-intersection-observer';
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import { getMyPosts, getPosts } from '../../api/postAPI';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { UserData } from '../../types/UserData';
-import { fetchUserProfile } from '../../api/userAPI';
+import { fetchUserProfile, getUserProfile } from '../../api/userAPI';
 import defaultProfile from '../../assets/images/defaultProfile.png';
 const MyPostList: React.FC = () => {
   const [posts, setPosts] = useState<PostData[]>([]);
@@ -16,10 +16,18 @@ const MyPostList: React.FC = () => {
   const [pageSize, setPageSize] = useState<number>(6);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   // const [error, setError] = useState<string | null>(null);
+
+  const { id } = useParams<{ id: string }>();
+  const getUserProfileFromId = () => {
+    return getUserProfile(id);
+  };
   const { data: userData } = useQuery<UserData>({
-    queryKey: ['getprofile'],
-    queryFn: fetchUserProfile,
+    queryKey: ['getprofile', id],
+    queryFn: getUserProfileFromId,
   });
+  const fetchPosts = ({ pageParam = 1 }) => {
+    return getMyPosts({ userId: Number(id), pageParam }); // userId는 실제 값으로 설정
+  };
   const {
     data,
     error,
@@ -29,8 +37,8 @@ const MyPostList: React.FC = () => {
     isFetchingNextPage,
     status,
   } = useInfiniteQuery({
-    queryKey: ['infinitePosts'],
-    queryFn: getMyPosts,
+    queryKey: ['infinitePosts', userData?.userName],
+    queryFn: fetchPosts,
     initialPageParam: 1,
     getNextPageParam: (lastPage, pages) => {
       return pages.length < lastPage.pagination.totalPages
@@ -38,6 +46,23 @@ const MyPostList: React.FC = () => {
         : undefined;
     },
   });
+  useEffect(() => {
+    const handleScroll = () => {
+      if (
+        window.innerHeight + document.documentElement.scrollTop !==
+          document.documentElement.offsetHeight ||
+        isFetchingNextPage
+      ) {
+        return;
+      }
+      if (hasNextPage) {
+        fetchNextPage();
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
   if (status === 'pending') {
     return <div>Loading...</div>;
   }
@@ -48,8 +73,8 @@ const MyPostList: React.FC = () => {
 
   return (
     <div>
-      <div className="flex flex-row  my-16">
-        <h1 className="flex justify-center text-5xl font-black items-center">
+      <div className="flex flex-row  my-16 justify-center align-center">
+        <h1 className="flex  text-5xl font-black text-center">
           {userData?.userName}의 블로그
         </h1>
       </div>
@@ -64,6 +89,7 @@ const MyPostList: React.FC = () => {
                   thumbSrc={post.thumb}
                   likeCount={post.likeCount}
                   showStatus={post.showStatus}
+                  id={post.id}
                 />
               </Link>
             </div>
@@ -73,7 +99,9 @@ const MyPostList: React.FC = () => {
       <div>
         {isFetchingNextPage && <div>Loading more...</div>}
         {!hasNextPage && (
-          <div className="flex justify-center">No more posts...</div>
+          <div className="w-postWidth h-postHeight  flex justify-center">
+            No more posts...
+          </div>
         )}
       </div>
     </div>

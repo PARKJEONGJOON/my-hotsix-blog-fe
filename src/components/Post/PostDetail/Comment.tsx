@@ -12,10 +12,18 @@ import EditComment from './EditComment';
 import { useAddComment } from '../../../queries/useAddComment';
 import { usePostDetailStore } from '../../../stores/postsStore';
 import { useEditComment } from '../../../queries/useEditComment';
+import { fetchUserProfile } from '../../../api/userAPI';
+import { useQuery } from '@tanstack/react-query';
+import { UserData } from '../../../types/UserData';
+import { useNavigate } from 'react-router-dom';
 
 const Comment: React.FC<{
   comment: CommentData;
 }> = ({ comment }) => {
+  const { data: userData, error } = useQuery<UserData>({
+    queryKey: ['getprofile'],
+    queryFn: fetchUserProfile,
+  });
   const { mutate: editCommentMutate } = useEditComment();
   const { mutate: deleteCommentMutate } = useDeleteComment();
   const handleDeleteComment = () => {
@@ -30,7 +38,7 @@ const Comment: React.FC<{
   const handleCommentChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setNewComment(e.target.value);
   };
-
+  const navigate = useNavigate();
   const [commentToggle, setCommentToggle] = useState<boolean>(false);
   const commentRef = useRef<HTMLTextAreaElement>(null);
   useEffect(() => {
@@ -44,7 +52,12 @@ const Comment: React.FC<{
           src={comment.profileImg || defaultProfile}
         />
         <div className="flex flex-col ml-3 ">
-          <div className="text-lg font-black ">{comment.userName}</div>
+          <div
+            className="text-lg font-black "
+            onClick={() => navigate(`/myblog/${comment.userId}`)}
+          >
+            {comment.userName}
+          </div>
         </div>
       </div>
 
@@ -64,7 +77,7 @@ const Comment: React.FC<{
             setCommentToggle(false);
           }}
           className="flex items-cent
-          er  text-base font-normal cursor-pointer transition-transform duration-300 ease-in-out hover:scale-105 hover:text-sky-300"
+          er  text-base font-light cursor-pointer transition-transform duration-300 ease-in-out hover:scale-105 hover:font-black hover:text-black"
         >
           <PlusCircleOutlined className="text-3xl my-1" />
           등록
@@ -73,7 +86,7 @@ const Comment: React.FC<{
           onClick={() => {
             setCommentToggle(false);
           }}
-          className="flex items-center  text-base font-normal cursor-pointer transition-transform duration-300 ease-in-out hover:scale-105 hover:text-sky-300"
+          className="flex items-center  text-base font-light cursor-pointer transition-transform duration-300 ease-in-out hover:scale-105 hover:font-black hover:text-black"
         >
           <CloseCircleOutlined className="text-3xl my-1 " />
           취소
@@ -88,7 +101,10 @@ const Comment: React.FC<{
           src={comment.profileImg || defaultProfile}
         />
         <div className="flex flex-col ml-3">
-          <div className="text-lg font-black cursor-pointer transition-transform duration-300 ease-in-out hover:scale-105 hover:text-sky-300">
+          <div
+            className="text-lg font-medium hover:font-black cursor-pointer transition-transform duration-300 ease-in-out hover:scale-105 hover:text-black"
+            onClick={() => navigate(`/myblog/${comment.userId}`)}
+          >
             {comment.userName}
           </div>
           <div className="text-xs">{comment.updatedAt.slice(0, 10)}</div>
@@ -98,22 +114,26 @@ const Comment: React.FC<{
       <div className="w-[20vw] h-20  text-base overflow-auto break-words">
         {comment.content}
       </div>
-      <div className="flex flex-col text-sm ">
-        <div
-          onClick={() => setCommentToggle(true)}
-          className="text-sm font-normal cursor-pointer transition-transform duration-300 ease-in-out hover:scale-105 hover:text-sky-300"
-        >
-          <FormOutlined className="text-2xl " />
-          수정
+      {comment.userName == userData?.userName ? (
+        <div className="flex flex-col text-sm ">
+          <div
+            onClick={() => setCommentToggle(true)}
+            className="text-sm font-medium hover:font-black cursor-pointer transition-transform duration-300 ease-in-out hover:scale-105 hover:text-black"
+          >
+            <FormOutlined className="text-2xl " />
+            수정
+          </div>
+          <div
+            onClick={handleDeleteComment}
+            className=" text-sm font-medium hover:font-black cursor-pointer transition-transform duration-300 ease-in-out hover:scale-105 hover:text-black"
+          >
+            <DeleteOutlined className="text-2xl " />
+            삭제
+          </div>
         </div>
-        <div
-          onClick={handleDeleteComment}
-          className=" text-sm font-normal cursor-pointer transition-transform duration-300 ease-in-out hover:scale-105 hover:text-sky-300"
-        >
-          <DeleteOutlined className="text-2xl " />
-          삭제
-        </div>
-      </div>
+      ) : (
+        <></>
+      )}
     </div>
   );
 };

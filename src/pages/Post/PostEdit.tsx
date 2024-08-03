@@ -27,6 +27,7 @@ const PostEdit = () => {
       setPostData(cachedPost as PostData); // 타입 단언
     }
   }, [cachedPost]);
+
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -37,6 +38,9 @@ const PostEdit = () => {
 
   const { mutate: editPostMutate } = useMutation({
     mutationFn: editPost,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['infinitePosts'] });
+    },
   });
 
   const uploadImage = async (file: File) => {
@@ -45,31 +49,33 @@ const PostEdit = () => {
       setPostData({ ...postData, thumb: url });
       console.log(postData);
     } catch (error) {
-      console.error('Error uploa)ding image:', error);
+      console.error('Error uploading image:', error);
     }
   };
+
   const handleImageDelete = () => {
     setPostData({ ...postData, thumb: '' });
   };
+
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newTitle = event.target.value;
     setPostData({ ...postData, title: newTitle });
   };
-  const handleEdit = () => {
-    // 필요한 데이터를 포함하여 mutate 함수 호출
 
-    setPostData({
+  const handleEdit = () => {
+    const updatedPostData = {
       ...postData,
       description: extractTextFromHTML(postData.content),
-    });
-    if (!postData.title?.trim()) {
+    };
+
+    if (!updatedPostData.title?.trim()) {
       notify('제목을 입력해주세요.');
-    } else if (!extractTextFromHTML(postData.content).trim()) {
+    } else if (!updatedPostData.description.trim()) {
       notify('내용을 입력해주세요.');
-    } else if (postData.showStatus === undefined) {
+    } else if (updatedPostData.showStatus === undefined) {
       notify('공개/비공개 선택이 필요합니다.');
     } else {
-      editPostMutate(postData);
+      editPostMutate(updatedPostData);
       notify('게시글 수정 완료');
       setPostData({
         thumb: '',
@@ -90,13 +96,13 @@ const PostEdit = () => {
             className="text-xl mt-3 mb-2 w-[40vw] border-b-2 border-gray focus:outline-none text-g"
             placeholder="제목"
             onChange={handleTitleChange}
-            value={cachedPost?.title}
+            value={postData?.title}
           />
           <Editor />
           <div className="flex flex-row">
             <img
               alt="썸네일 이미지"
-              src={cachedPost?.thumb || defaultThumb}
+              src={postData?.thumb || defaultThumb}
               className="flex flex-col w-[8vw] h-16 mt-14 border-gray border-2 rounded-sm"
             />
             <div className="flex flex-col  mt-14">

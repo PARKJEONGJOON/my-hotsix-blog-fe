@@ -19,14 +19,14 @@ const AddComment = () => {
     queryFn: fetchUserProfile,
   });
   return (
-    <div className="flex justify-between w-[38vw]  border-t-[2px] border-t-stone-200 pt-8">
+    <div className="flex justify-between w-[38vw]  border-t-[0px] border-t-stone-200 py-4">
       <div className="flex ">
         <img
           className="w-[55px] h-[55px] rounded-full border-[1px] "
-          src={defaultProfile}
+          src={userData?.profileImg || defaultProfile}
         />
         <div className="flex flex-col ml-3">
-          <div className="text-lg font-black">{userData?.userName}</div>
+          <div className="text-lg font-medium">{userData?.userName}</div>
         </div>
       </div>
 
@@ -43,7 +43,7 @@ const AddComment = () => {
           addCommentMutate({ content: comment, postId: postDetail.id });
           setComment('');
         }}
-        className="flex items-center justify-center text-base font-normal cursor-pointer transition-transform duration-300 ease-in-out hover:scale-110 hover:text-sky-300"
+        className="flex items-center justify-center font-medium hover:font-black cursor-pointer transition-transform duration-300 ease-in-out hover:scale-105 hover:text-black"
       >
         <PlusCircleOutlined className="text-3xl " />
         등록

@@ -2,9 +2,14 @@ import axios from 'axios';
 import { NewUserData, UserData } from '../types/UserData';
 import { notify } from '../components/Notice/Toast';
 import { ValidateEmail } from '../types/ValidateEmail';
+import axiosInstance from './axiosInstance';
 
 export const fetchUserProfile = async (): Promise<UserData> => {
   const response = await axios.get<UserData>('/api/users');
+  return response.data;
+};
+export const getUserProfile = async (userId: string | undefined) => {
+  const response = await axios.get(`/api/users/${userId}`);
   return response.data;
 };
 export const updateUserProfile = async (profile: NewUserData) => {
@@ -76,11 +81,15 @@ export const logOut = async () => {
 export const signout = async () => {
   try {
     const response = await axios.delete('/api/users');
-    console.log(response.data);
-    alert('회원 탈퇴가 완료되었습니다.');
+    return response.data;
   } catch (error) {
-    console.error('회원 탈퇴 오류:', error);
-    alert('회원 탈퇴 중 오류가 발생했습니다. 다시 시도해 주세요.');
+    if (axios.isAxiosError(error)) {
+      if (error.response) {
+        notify(error.response.data.error);
+      } else {
+        notify(error.message);
+      }
+    }
   }
 };
 

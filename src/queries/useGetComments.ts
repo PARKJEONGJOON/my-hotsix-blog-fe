@@ -3,7 +3,7 @@ import { getCommnents } from '../api/commentAPI';
 
 export const useGetComments = (postId: number) => {
   return useQuery({
-    queryKey: ['comments', postId],
+    queryKey: ['comments'],
     queryFn: () => getCommnents(postId),
   });
 };

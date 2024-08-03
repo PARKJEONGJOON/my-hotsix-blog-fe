@@ -40,6 +40,7 @@ const PostDetail = () => {
           updatedAt={currentPost?.updatedAt}
           showStatus={currentPost?.showStatus}
           likeCount={currentPost?.likeCount}
+          userId={currentPost?.userId}
         />
         <ReactQuill
           className="w-[40vw] mt-4 "
@@ -50,6 +51,8 @@ const PostDetail = () => {
         <CommentHeader
           commentCount={comments?.length}
           likeCount={currentPost?.likeCount}
+          userId={currentPost?.userId}
+          id={currentPost?.id}
         />
         {comments ? (
           comments.length > 0 ? (

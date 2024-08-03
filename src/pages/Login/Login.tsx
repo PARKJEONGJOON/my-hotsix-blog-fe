@@ -7,11 +7,12 @@ import { useMutation, UseMutationResult } from '@tanstack/react-query';
 import { login, LoginData } from '../../api/auth';
 import useInput from '../../hooks/useInput';
 import { notify } from '../../components/Notice/Toast';
+import { useLoginStateStore } from '../../store';
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
   const [submitted, setSubmitted] = useState(false);
-
+  const { isLoggedIn, setIsLoggedIn } = useLoginStateStore();
   useEffect(() => {
     const cookie = localStorage.getItem('auth-cookie');
     if (cookie) {
@@ -28,6 +29,7 @@ const Login: React.FC = () => {
     mutationFn: login,
     onSuccess: (data) => {
       if (data) {
+        setIsLoggedIn(true);
         navigate('/');
       } else {
         notify('회원 정보가 일치하지 않습니다.');

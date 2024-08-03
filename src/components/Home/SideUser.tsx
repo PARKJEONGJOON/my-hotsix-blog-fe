@@ -5,7 +5,8 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { UserData } from '../../types/UserData';
-import { fetchUserProfile } from '../../api/userAPI';
+import { fetchUserProfile, getUserProfile } from '../../api/userAPI';
+import { useParams } from 'react-router-dom';
 
 interface UserProps {
   userName: string;
@@ -23,12 +24,16 @@ const SideUser = () => {
   //   introduce: '',
   //   profileImg: '',
   // });
+  const { id } = useParams<{ id: string }>();
+  const getUserProfileFromId = () => {
+    return getUserProfile(id);
+  };
 
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const { data: userData } = useQuery<UserData>({
-    queryKey: ['getprofile'],
-    queryFn: fetchUserProfile,
+    queryKey: ['getprofile', id],
+    queryFn: getUserProfileFromId,
   });
 
   return (

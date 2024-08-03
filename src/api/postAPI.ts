@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { PostData } from '../types/Post';
+import { GetPostData, PostData } from '../types/Post';
 import { notify } from '../components/Notice/Toast';
 
 export const registerPost = async (postData: PostData) => {
@@ -51,6 +51,24 @@ export const getPostDetail = async (postId: number) => {
     }
   }
 };
+export const getPostLikes = async (postId: number) => {
+  try {
+    const response = await axios.get(`/api/posts/${postId}/like`, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      if (error.response) {
+        console.log(error.response.data.error);
+      } else {
+        console.log(error.message);
+      }
+    }
+  }
+};
 export const getPosts = async ({ pageParam = 1 }) => {
   try {
     const response = await axios.get(`/api/posts?page=${pageParam}`, {
@@ -69,13 +87,16 @@ export const getPosts = async ({ pageParam = 1 }) => {
     }
   }
 };
-export const getMyPosts = async ({ pageParam = 1 }) => {
+export const getMyPosts = async ({ userId, pageParam = 1 }: GetPostData) => {
   try {
-    const response = await axios.get(`/api/posts/user/2?page=${pageParam}`, {
-      headers: {
-        'Content-Type': 'application/json',
+    const response = await axios.get(
+      `/api/posts/user/${userId}?page=${pageParam}`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
       },
-    });
+    );
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -102,6 +123,36 @@ export const deletePost = async (postId: number) => {
         console.log(error.response.data.error);
       } else {
         console.log(error.message);
+      }
+    }
+  }
+};
+export const addPostLike = async (postId: number) => {
+  try {
+    const response = await axios.post(`/api/posts/${postId}/like`);
+    notify(response.data.message);
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      if (error.response) {
+        notify(error.response.data.error);
+      } else {
+        notify(error.message);
+      }
+    }
+  }
+};
+export const subPostLike = async (postId: number) => {
+  try {
+    const response = await axios.delete(`/api/posts/${postId}/like`);
+    notify(response.data.message);
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      if (error.response) {
+        notify(error.response.data.error);
+      } else {
+        notify(error.message);
       }
     }
   }

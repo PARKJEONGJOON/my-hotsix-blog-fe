@@ -56,7 +56,7 @@ const PostList: React.FC = () => {
   if (status === 'error') {
     return <div>Error: {error.message}</div>;
   }
-  console.log(data);
+
   // const loadPosts = useCallback(
   //   async (page: number) => {
   //     setIsLoading(true);
@@ -121,6 +121,8 @@ const PostList: React.FC = () => {
                   content={post.description}
                   thumbSrc={post.thumb}
                   likeCount={post.likeCount}
+                  showStatus={post.showStatus}
+                  id={post.id}
                 />
               </Link>
             </div>
@@ -130,7 +132,9 @@ const PostList: React.FC = () => {
       <div>
         {isFetchingNextPage && <div>Loading more...</div>}
         {!hasNextPage && (
-          <div className="flex justify-center">No more posts...</div>
+          <div className="w-postWidth h-postHeight flex align-center justify-center">
+            No more posts...
+          </div>
         )}
       </div>
     </div>

@@ -1,10 +1,11 @@
 export interface UserData {
-  userId?: string;
+  userId?: number;
   password?: string;
   userName?: string;
   profileImg?: string | null;
   gitUrl?: string | undefined;
   introduce?: string | undefined;
+  id?: number | undefined;
 }
 export interface NewUserData {
   newUserName?: string;

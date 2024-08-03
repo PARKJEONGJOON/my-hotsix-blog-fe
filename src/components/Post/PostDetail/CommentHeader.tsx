@@ -1,17 +1,41 @@
 import { HeartFilled, HeartOutlined } from '@ant-design/icons';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useGetPostLikes } from '../../../queries/useGetPostLikes';
+import { useQuery } from '@tanstack/react-query';
+import { UserData } from '../../../types/UserData';
+import { fetchUserProfile } from '../../../api/userAPI';
+import { useAddPostLikes } from '../../../queries/useAddPostLikes';
+import { useSubPostLikes } from '../../../queries/useSubPostLikes';
 
 const CommentHeader: React.FC<{
   commentCount: number;
   likeCount: number;
-}> = ({ commentCount, likeCount }) => {
+  userId: number;
+  id: number;
+}> = ({ commentCount, likeCount, userId, id }) => {
   const [isLiked, setIsLiked] = useState<boolean>(false);
   const handleAddLikes = () => {
+    addLikes();
     setIsLiked(true);
   };
   const handleSubLikes = () => {
+    subLikes();
     setIsLiked(false);
   };
+  const { mutate: addLikes } = useAddPostLikes(id);
+  const { mutate: subLikes } = useSubPostLikes(id);
+  const { data: postLikes } = useGetPostLikes(id);
+  const { data: userProfile, error } = useQuery<UserData>({
+    queryKey: ['getprofile'],
+    queryFn: fetchUserProfile,
+  });
+  useEffect(
+    () =>
+      postLikes?.likedId.includes(userProfile?.id)
+        ? setIsLiked(true)
+        : setIsLiked(false),
+    [postLikes, userProfile],
+  );
 
   return (
     <div className=" w-[40vw] border-b-2 border-b-stone-200  font-black  text-lg ">
@@ -28,7 +52,7 @@ const CommentHeader: React.FC<{
           />
         )}
       </div>
-      <span> 좋아요 {likeCount}개</span>&nbsp;&nbsp;&nbsp;댓글
+      <span> 좋아요 {postLikes?.likeCount}개</span>&nbsp;&nbsp;&nbsp;댓글
       <span className="font-black text-darkblue"> {commentCount}개</span>
     </div>
   );
