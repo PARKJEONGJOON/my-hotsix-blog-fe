@@ -20,7 +20,7 @@ const PostTitle: React.FC<{
     const confirmed = window.confirm('정말로 게시글을 삭제 하겠습니까?');
     if (confirmed) {
       deletePostMutate(Number(id));
-      navigate('/home');
+      navigate(-1);
     }
   };
   const { data: userData, error } = useQuery<UserData>({
