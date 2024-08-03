@@ -6,7 +6,7 @@ import axios from 'axios';
 import { useMutation } from '@tanstack/react-query';
 import { resetPassword } from '../../api/userAPI';
 import { useNavigate } from 'react-router-dom';
-import { ValidateEmail } from '../../types/ValidateEmail';
+import { ValidateEmail1 } from '../../types/ValidateEmail';
 
 function PasswordEdit() {
   const [showCode, setShowCode] = useState<boolean>(false);
@@ -45,7 +45,7 @@ function PasswordEdit() {
     }
   };
 
-  const requestEmail = useCallback(async (email: ValidateEmail) => {
+  const requestEmail = useCallback(async (email: ValidateEmail1) => {
     try {
       const response = await axios.post('/api/verifies/request', email);
       setShowCode(true);
@@ -63,7 +63,7 @@ function PasswordEdit() {
     }
   }, []);
 
-  const checkCode = useCallback(async (code: ValidateEmail) => {
+  const checkCode = useCallback(async (code: ValidateEmail1) => {
     try {
       const response = await axios.post('/api/verifies/code', code);
       notify(response.data.message);

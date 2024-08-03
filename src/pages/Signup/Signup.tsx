@@ -5,10 +5,11 @@ import { useNavigate } from 'react-router-dom';
 import { useMutation, UseMutationResult } from '@tanstack/react-query';
 import { register, RegisterData } from '../../api/auth';
 import EmailInputField from '../../components/ValidateEmail/EmailInputField';
-import { ValidateEmail } from '../../types/ValidateEmail';
+
 import axios from 'axios';
 import { notify } from '../../components/Notice/Toast';
 import Timer from '../../components/ValidateEmail/Timer';
+import { ValidateEmail1 } from '../../types/ValidateEmail';
 
 const Signup: React.FC = () => {
   const navigate = useNavigate();
@@ -104,7 +105,7 @@ const Signup: React.FC = () => {
       introduce: introduceInput.value,
     });
   };
-  const checkCode = useCallback(async (code: ValidateEmail) => {
+  const checkCode = useCallback(async (code: ValidateEmail1) => {
     try {
       const response = await axios.post('/api/verifies/code', code);
       notify(response.data.message);
@@ -125,7 +126,7 @@ const Signup: React.FC = () => {
     mutationFn: checkCode,
   });
 
-  const requestEmail = useCallback(async (email: ValidateEmail) => {
+  const requestEmail = useCallback(async (email: ValidateEmail1) => {
     try {
       const response = await axios.post('/api/verifies/request', email);
       setShowCode(true);
