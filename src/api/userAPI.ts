@@ -2,8 +2,11 @@ import axios from 'axios';
 import { NewUserData, UserData } from '../types/UserData';
 import { notify } from '../components/Notice/Toast';
 
-import axiosInstance from './axiosInstance';
-import { ValidateEmail } from '../types/ValidateEmail';
+interface ValidateEmail {
+  email?: string;
+  resetCode?: string;
+  newPassword?: string;
+}
 
 export const fetchUserProfile = async (): Promise<UserData> => {
   const response = await axios.get<UserData>('/api/users');
