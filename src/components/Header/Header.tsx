@@ -23,7 +23,7 @@ const Header = ({ userName = 'Hotsix' }: Props) => {
   });
   const { isLoggedIn, setIsLoggedIn } = useLoginStateStore();
   const profileImageUrl = userData?.profileImg || defaultProfile;
-  userName = userData?.userName || 'Hotsix';
+  userName = 'Hotsix';
   const navigate = useNavigate();
   const { mutate: logoutMutate } = useMutation({
     mutationFn: logOut,
