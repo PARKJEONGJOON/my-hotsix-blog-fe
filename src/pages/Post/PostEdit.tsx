@@ -38,7 +38,8 @@ const PostEdit = () => {
 
   const { mutate: editPostMutate } = useMutation({
     mutationFn: editPost,
-    onSuccess: () => {
+    onSuccess: (data) => {
+      if (data) notify('게시글 수정 완료');
       queryClient.invalidateQueries({ queryKey: ['infinitePosts'] });
     },
   });
@@ -54,7 +55,8 @@ const PostEdit = () => {
   };
 
   const handleImageDelete = () => {
-    setPostData({ ...postData, thumb: '' });
+    const removedThumb = { ...postData, thumb: '' };
+    setPostData(removedThumb);
   };
 
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -76,7 +78,6 @@ const PostEdit = () => {
       notify('공개/비공개 선택이 필요합니다.');
     } else {
       editPostMutate(updatedPostData);
-      notify('게시글 수정 완료');
       setPostData({
         thumb: '',
         title: '',
@@ -107,7 +108,7 @@ const PostEdit = () => {
             />
             <div className="flex flex-col  mt-14">
               <button className="w-28 h-6 ml-6 border-gray border-2 mb-[7px] rounded-sm font-MangoRegular  text-sm m hover:bg-slate-50 transition-colors">
-                <label htmlFor="fileInput">이미지 업로드</label>
+                <label htmlFor="fileInput">썸네일 업로드</label>
                 <input
                   id="fileInput"
                   type="file"

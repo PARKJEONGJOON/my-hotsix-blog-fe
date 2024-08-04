@@ -19,7 +19,8 @@ import { useNavigate } from 'react-router-dom';
 
 const Comment: React.FC<{
   comment: CommentData;
-}> = ({ comment }) => {
+  onEditComplete: () => void;
+}> = ({ comment, onEditComplete }) => {
   const { data: userData, error } = useQuery<UserData>({
     queryKey: ['getprofile'],
     queryFn: fetchUserProfile,
@@ -37,6 +38,10 @@ const Comment: React.FC<{
   const { mutate: addCommentMutate } = useAddComment();
   const handleCommentChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setNewComment(e.target.value);
+  };
+  const handleEdit = () => {
+    editCommentMutate({ commentId: comment.id, content: newComment });
+    onEditComplete(); // 댓글 수정 후 refetch 호출
   };
   const navigate = useNavigate();
   const [commentToggle, setCommentToggle] = useState<boolean>(false);
@@ -117,7 +122,10 @@ const Comment: React.FC<{
       {comment.userName == userData?.userName ? (
         <div className="flex flex-col text-sm ">
           <div
-            onClick={() => setCommentToggle(true)}
+            onClick={() => {
+              setCommentToggle(true);
+              handleEdit();
+            }}
             className="text-sm font-medium hover:font-black cursor-pointer transition-transform duration-300 ease-in-out hover:scale-105 hover:text-black"
           >
             <FormOutlined className="text-2xl " />
