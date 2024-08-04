@@ -26,7 +26,9 @@ const AddComment = () => {
           src={userData?.profileImg || defaultProfile}
         />
         <div className="flex flex-col ml-3">
-          <div className="text-lg font-medium">{userData?.userName}</div>
+          <div className="text-base text-stone-700 font-medium">
+            {userData?.userName}
+          </div>
         </div>
       </div>
 
@@ -43,9 +45,9 @@ const AddComment = () => {
           addCommentMutate({ content: comment, postId: postDetail.id });
           setComment('');
         }}
-        className="flex items-center justify-center font-medium hover:font-black cursor-pointer transition-transform duration-300 ease-in-out hover:scale-105 hover:text-black"
+        className="text-sm text-stone-700 font-medium flex items-center justify-center font-medium hover:font-black cursor-pointer transition-transform duration-300 ease-in-out hover:scale-105 hover:text-black"
       >
-        <PlusCircleOutlined className="text-3xl " />
+        <PlusCircleOutlined className="text-2xl " />
         등록
       </div>
     </div>

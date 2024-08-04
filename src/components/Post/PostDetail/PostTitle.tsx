@@ -32,7 +32,7 @@ const PostTitle: React.FC<{
   };
   return (
     <div className="flex flex-col w-[40vw] border-b border-b-stone-200 pb-3 ">
-      <div className="text-5xl font-black font-bold  from-neutral-950">
+      <div className="text-3xl text-stone-700 font-medium  from-neutral-950">
         {'  ' + title}
       </div>
       <div className="flex-row flex justify-between">
@@ -41,11 +41,14 @@ const PostTitle: React.FC<{
             onClick={() => {
               navigate(`/myblog/${userId}`);
             }}
-            className="text-black font-black font-thin cursor-pointer transition-transform duration-300 ease-in-out hover:scale-105 hover:font-black hover:text-black"
+            className="text-base text-stone-700 font-medium cursor-pointer transition-transform duration-300 ease-in-out hover:scale-[1.02] hover:font-black hover:text-black"
           >
             {author}
           </button>
-          <div className="font-light"> ㅤ {updatedAt?.slice(0, 10)}</div>
+          <div className="font-light">
+            {' '}
+            ㅤ {updatedAt?.slice(0, 10) + ' ' + updatedAt?.slice(11, 16)}
+          </div>
           {!showStatus ? (
             <div className="rounded-md font-bold text-xs p-1 ml-2 text-white bg-darkblue">
               비공개

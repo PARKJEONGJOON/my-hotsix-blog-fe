@@ -17,7 +17,7 @@ const LoginHeader = ({ userName = 'Hotsix' }: Props) => {
   const navigate = useNavigate();
   return (
     <header className="w-full py-[6px] border-b-1 border-skyblue shadow  flex justify-between items-center whitespace-nowrap">
-      <div className="ml-14 text-3xl text-darkblue bold">
+      <div className="ml-14 text-2xl text-blue-900">
         <Link to="/">{userName}'s Blog</Link>
       </div>
 
