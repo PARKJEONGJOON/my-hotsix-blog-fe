@@ -18,7 +18,7 @@ const PostDetail = () => {
   const { id } = useParams<{ id: string }>();
   const { postDetail, setPostDetail } = usePostDetailStore();
   const { data: currentPost } = useGetPostDetail(Number(id));
-  const { data: comments } = useGetComments(Number(id));
+  const { data: comments, refetch } = useGetComments(Number(id));
 
   useEffect(() => {
     if (currentPost) {
@@ -28,6 +28,9 @@ const PostDetail = () => {
 
   console.log(currentPost);
   console.log(comments);
+  const handleCommentEdit = () => {
+    refetch(); // 댓글 수정 후 댓글 목록을 다시 불러옵니다.
+  };
 
   return (
     <div>
@@ -59,7 +62,13 @@ const PostDetail = () => {
             comments
               .slice()
               .reverse()
-              .map((coment: CommentData) => <Comment comment={coment} />)
+              .map((coment: CommentData) => (
+                <Comment
+                  key={coment.id}
+                  onEditComplete={handleCommentEdit}
+                  comment={coment}
+                />
+              ))
           ) : (
             <div className="text-xl mt-10 font-black"></div>
           )

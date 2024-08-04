@@ -24,6 +24,9 @@ function Post() {
 
   const { mutate: registerPostMutate } = useMutation({
     mutationFn: registerPost,
+    onSuccess(data) {
+      if (data) notify('게시글 생성 완료');
+    },
   });
 
   const uploadImage = async (file: File) => {
@@ -36,7 +39,9 @@ function Post() {
     }
   };
   const handleImageDelete = () => {
-    setPostData({ ...postData, thumb: '' });
+    const removedThumb = { ...postData, thumb: '' };
+    setPostData(removedThumb);
+    console.log(postData.thumb);
   };
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newTitle = event.target.value;
@@ -48,7 +53,7 @@ function Post() {
       ...postData,
       description: extractTextFromHTML(postData.content),
     };
-
+    console.log(postData.thumb);
     setPostData(updatedPostData);
 
     if (!updatedPostData.title?.trim()) {
@@ -59,7 +64,6 @@ function Post() {
       notify('공개/비공개 선택이 필요합니다.');
     } else {
       registerPostMutate(updatedPostData);
-      notify('게시글 생성 완료');
 
       setTimeout(() => {
         setPostData({
@@ -93,7 +97,7 @@ function Post() {
             />
             <div className="flex flex-col  mt-14">
               <button className="w-28 h-6 ml-6 border-gray border-2 mb-[7px] rounded-sm font-MangoRegular  text-sm m hover:bg-slate-50 transition-colors">
-                <label htmlFor="fileInput">이미지 업로드</label>
+                <label htmlFor="fileInput">썸네일 업로드</label>
                 <input
                   id="fileInput"
                   type="file"
