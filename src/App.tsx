@@ -13,6 +13,7 @@ import Profile from './pages/Profile/Profile';
 import PostDetail from './pages/Post/PostDetail';
 import PostEdit from './pages/Post/PostEdit';
 import MyHome from './pages/Home/MyHome';
+import SerchResult from './pages/Home/SerchResult';
 
 const queryClient = new QueryClient();
 
@@ -31,6 +32,7 @@ const App: React.FC = () => (
         <Route path="/posts/:id" element={<PostDetail />} />
         <Route path="/postedit/:id" element={<PostEdit />} />
         <Route path="/myblog/:id" element={<MyHome />} />
+        <Route path="/search/:keyword" element={<SerchResult />} />
         <Route path="/search" element={<Search />} />
       </Routes>
       <Toast />

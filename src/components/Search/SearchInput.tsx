@@ -7,7 +7,17 @@ interface SearchInputProps {
   onSearch: () => void; // 검색 버튼 클릭 시 사용하는 함수
 }
 
-const SearchInput: React.FC<SearchInputProps> = ({ searchQuery, setSearchQuery, onSearch }) => {
+const SearchInput: React.FC<SearchInputProps> = ({
+  searchQuery,
+  setSearchQuery,
+  onSearch,
+}) => {
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      onSearch();
+    }
+  };
+
   return (
     <div className="flex items-center border p-2 rounded">
       <img
@@ -21,6 +31,7 @@ const SearchInput: React.FC<SearchInputProps> = ({ searchQuery, setSearchQuery, 
         placeholder="검색어를 입력하세요."
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
+        onKeyDown={handleKeyPress}
         className="w-96 h-14 p-2 outline-none"
       />
     </div>
