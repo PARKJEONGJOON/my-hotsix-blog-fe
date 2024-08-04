@@ -117,6 +117,7 @@ const PostList: React.FC = () => {
             <div key={post.id} className="my-4">
               <Link to={`/posts/${post.id}`}>
                 <Post
+                  commentCount={post.commentCount}
                   title={post.title}
                   content={post.description}
                   thumbSrc={post.thumb}

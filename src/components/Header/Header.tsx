@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { UserData } from '../../types/UserData';
 import { fetchUserProfile, logOut } from '../../api/userAPI';
 import { useLoginStateStore } from '../../store';
+import { useEffect } from 'react';
 
 interface Props {
   // user정보 받아오게 되면 optional 해젠
@@ -33,6 +34,9 @@ const Header = ({ userName = 'Hotsix' }: Props) => {
       navigate('/login');
     },
   });
+  // useEffect(() => {
+  //   if (!userData) navigate('/login');
+  // }, [userData]);
 
   return (
     <header className="w-full py-[6px] border-b-1 border-skyblue shadow  flex justify-between items-center whitespace-nowrap">

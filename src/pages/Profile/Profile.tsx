@@ -1,6 +1,6 @@
 import defaultProfile from '../../assets/images/defaultProfile.png';
 import { ChangeEvent, RefObject, useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
@@ -16,6 +16,7 @@ import APItest from '../../components/APItest/APItest';
 import { uploadImageToFirebase } from '../../Firebase';
 import Header from '../../components/Header/Header';
 import { useSignOut } from '../../queries/useSignOut';
+import { useLoginStateStore } from '../../store';
 
 interface EditToggle {
   userName: boolean;
@@ -25,6 +26,8 @@ interface EditToggle {
 }
 
 function Profile() {
+  const navigate = useNavigate();
+  const { setIsLoggedIn } = useLoginStateStore();
   const userNameRef = useRef<HTMLInputElement>(null);
   const gitUrlRef = useRef<HTMLInputElement>(null);
   const introduceRef = useRef<HTMLTextAreaElement>(null);
@@ -249,7 +252,13 @@ function Profile() {
           <EditSection>
             <Label>회원탈퇴</Label>
             <EditSection>
-              <UserDeleteButton onClick={handleDeleteAccount}>
+              <UserDeleteButton
+                onClick={() => {
+                  handleDeleteAccount();
+                  setIsLoggedIn(false);
+                  navigate('/');
+                }}
+              >
                 회원 탈퇴
               </UserDeleteButton>
             </EditSection>

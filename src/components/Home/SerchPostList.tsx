@@ -3,30 +3,16 @@ import { fetchPosts, PostData } from '../../api/auth';
 import Post from './Post';
 import { useInView } from 'react-intersection-observer';
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
-import { getMyPosts, getPosts } from '../../api/postAPI';
+import { getMyPosts, getPosts, getSerchPosts } from '../../api/postAPI';
 import { Link, useParams } from 'react-router-dom';
 import { UserData } from '../../types/UserData';
 import { fetchUserProfile, getUserProfile } from '../../api/userAPI';
 import defaultProfile from '../../assets/images/defaultProfile.png';
-const MyPostList: React.FC = () => {
-  const [posts, setPosts] = useState<PostData[]>([]);
-  const [currentPage, setCurrentPage] = useState<number>(1);
-  const [totalPages, setTotalPages] = useState<number>(3);
-  const [totalItems, setTotalItems] = useState<number>(15);
-  const [pageSize, setPageSize] = useState<number>(6);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  // const [error, setError] = useState<string | null>(null);
+const SerchPostList: React.FC = () => {
+  const { keyword } = useParams<{ keyword: string }>();
 
-  const { id } = useParams<{ id: string }>();
-  const getUserProfileFromId = () => {
-    return getUserProfile(id);
-  };
-  const { data: userData } = useQuery<UserData>({
-    queryKey: ['getprofile', id],
-    queryFn: getUserProfileFromId,
-  });
   const fetchPosts = ({ pageParam = 1 }) => {
-    return getMyPosts({ userId: Number(id), pageParam }); // userId는 실제 값으로 설정
+    return getSerchPosts({ keyword: keyword, pageParam }); // userId는 실제 값으로 설정
   };
   const {
     data,
@@ -37,7 +23,7 @@ const MyPostList: React.FC = () => {
     isFetchingNextPage,
     status,
   } = useInfiniteQuery({
-    queryKey: ['infinitePosts', userData?.userName],
+    queryKey: ['infinitePosts', keyword],
     queryFn: fetchPosts,
     initialPageParam: 1,
     getNextPageParam: (lastPage, pages) => {
@@ -46,6 +32,7 @@ const MyPostList: React.FC = () => {
         : undefined;
     },
   });
+
   useEffect(() => {
     const handleScroll = () => {
       if (
@@ -74,9 +61,9 @@ const MyPostList: React.FC = () => {
   return (
     <div>
       <div className="flex flex-row  justify-center align-center">
-        {/* <h1 className="flex  text-3xl font-medium text-stone-700 text-center">
-          {userData?.userName}의 블로그
-        </h1> */}
+        <h1 className="flex  text-3xl font-medium text-stone-700 text-center">
+          {keyword} 검색 결과
+        </h1>
       </div>
       {data.pages.map((page, pageIndex) => (
         <React.Fragment key={pageIndex}>
@@ -109,4 +96,4 @@ const MyPostList: React.FC = () => {
   );
 };
 
-export default MyPostList;
+export default SerchPostList;

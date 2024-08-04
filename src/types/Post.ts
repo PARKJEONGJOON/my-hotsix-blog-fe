@@ -15,6 +15,7 @@ export interface PostsState {
   setPosts: (postDEtail: PostData) => void;
 }
 export interface GetPostData {
-  userId: number | undefined;
+  userId?: number | undefined;
   pageParam?: number;
+  keyword?: string | undefined;
 }

@@ -9,6 +9,7 @@ interface PostProps {
   likeCount?: number;
   showStatus?: boolean;
   id?: number;
+  commentCount?: number;
 }
 
 const Post = ({
@@ -18,9 +19,8 @@ const Post = ({
   likeCount,
   showStatus,
   id,
+  commentCount,
 }: PostProps) => {
-  // const { data: comments } = useGetComments(Number(id));
-
   return (
     <div className="w-postWidth h-postHeight border-solid border-2 border-gray rounded-2xl flex flex-row px-8 pt-2 pb-3 space-x-12">
       <div className="w-postInnerWidth mt-0">
@@ -36,12 +36,10 @@ const Post = ({
                 {likeCount}
               </p>
             </div>
-            {/* <div className="flex flex-row">
+            <div className="flex flex-row">
               <CommentOutlined className="w-6 h-6 text-xl" />
-              <p className="text-small ml-1">
-                {comments ? comments.length : 0}
-              </p>
-            </div> */}
+              <p className="text-small ml-1"> {commentCount}</p>
+            </div>
             {showStatus ? (
               <div></div>
             ) : (

@@ -108,6 +108,30 @@ export const getMyPosts = async ({ userId, pageParam = 1 }: GetPostData) => {
     }
   }
 };
+export const getSerchPosts = async ({
+  keyword,
+  pageParam = 1,
+}: GetPostData) => {
+  try {
+    const response = await axios.get(
+      `/api/posts/serch?keyword=${keyword}&page=${pageParam}`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      },
+    );
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      if (error.response) {
+        console.log(error.response.data.error);
+      } else {
+        console.log(error.message);
+      }
+    }
+  }
+};
 export const deletePost = async (postId: number) => {
   try {
     const response = await axios.delete(`/api/posts/${postId}`, {

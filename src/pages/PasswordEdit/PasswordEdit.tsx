@@ -52,11 +52,13 @@ function PasswordEdit() {
   const requestEmail = useCallback(async (email: ValidateEmail1) => {
     try {
       const response = await axios.post('/api/verifies/request', email);
-      setShowCode(true);
-      setEmailButton('sended');
-      setShowTimer(true);
+      // setShowCode(true);
+      // setEmailButton('sended');
+      // setShowTimer(true);
       return response.data;
     } catch (error) {
+      setEmailButton('normal');
+
       if (axios.isAxiosError(error)) {
         if (error.response) {
           notify(error.response.data.error);
@@ -87,6 +89,14 @@ function PasswordEdit() {
 
   const { mutate: requestMutate } = useMutation({
     mutationFn: requestEmail,
+    onSuccess(data) {
+      if (data) {
+        notify('이메일이 전송 되었습니다.');
+        setShowCode(true);
+        setEmailButton('sended');
+        setShowTimer(true);
+      }
+    },
   });
 
   const { mutate: checkCodeMutate } = useMutation({
@@ -109,17 +119,33 @@ function PasswordEdit() {
       </h1>
       <div className="flex flex-col gap-2 border-2 border-skyblue rounded-3xl p-10 relative">
         <div className="flex">
-          <EmailInputField
-            title="이메일 입력란"
-            onclick={() => {
-              requestMutate({ email: inputEmail });
-            }}
-            onchange={handleInputEmailChange}
-            buttontext="이메일 인증"
-            showbutton={true}
-            type={'email'}
-            sort={emailButton}
-          />
+          {emailButton == 'sended' ? (
+            <div className="mb-1">
+              <div className="flex justify-between">
+                <div className="text-sm">이메일 입력란</div>
+              </div>
+              <div className="flex w-80 h-10 border-darkblue rounded-lg  border-2 text-sm ">
+                <div
+                  className={`flex items-center inline-block w-72 h-90  border-white rounded-lg px-4 text-sm outline-none  `}
+                >
+                  {inputEmail}
+                </div>
+              </div>
+            </div>
+          ) : (
+            <EmailInputField
+              title="이메일 입력란"
+              onclick={() => {
+                requestMutate({ email: inputEmail });
+                setEmailButton('sended');
+              }}
+              onchange={handleInputEmailChange}
+              buttontext="이메일 인증"
+              showbutton={true}
+              type={'email'}
+              sort={emailButton}
+            />
+          )}
           {showTimer && (
             <div className="absolute ml-[328px] mt-8">
               <Timer />
