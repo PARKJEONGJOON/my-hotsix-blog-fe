@@ -58,7 +58,7 @@ const Comment: React.FC<{
         />
         <div className="flex flex-col ml-3 ">
           <div
-            className="text-lg font-black "
+            className="text-base text-stone-700 font-medium "
             onClick={() => navigate(`/myblog/${comment.userId}`)}
           >
             {comment.userName}
@@ -107,16 +107,20 @@ const Comment: React.FC<{
         />
         <div className="flex flex-col ml-3">
           <div
-            className="text-lg font-medium hover:font-black cursor-pointer transition-transform duration-300 ease-in-out hover:scale-105 hover:text-black"
+            className="text-base text-stone-700 font-medium hover:font-black cursor-pointer transition-transform duration-300 ease-in-out hover:scale-105 hover:text-black"
             onClick={() => navigate(`/myblog/${comment.userId}`)}
           >
             {comment.userName}
           </div>
-          <div className="text-xs">{comment.updatedAt.slice(0, 10)}</div>
+          <div className="text-xs text-stone-700 font-medium">
+            {comment.updatedAt.slice(0, 10) +
+              ' ' +
+              comment.updatedAt.slice(11, 16)}
+          </div>
         </div>
       </div>
 
-      <div className="w-[20vw] h-20  text-base overflow-auto break-words">
+      <div className="w-[20vw] h-20  text-sm text-stone-700 font-medium overflow-auto break-words">
         {comment.content}
       </div>
       {comment.userName == userData?.userName ? (
@@ -126,14 +130,14 @@ const Comment: React.FC<{
               setCommentToggle(true);
               handleEdit();
             }}
-            className="text-sm font-medium hover:font-black cursor-pointer transition-transform duration-300 ease-in-out hover:scale-105 hover:text-black"
+            className="text-sm text-stone-700 font-medium hover:font-black cursor-pointer transition-transform duration-300 ease-in-out hover:scale-105 hover:text-black"
           >
             <FormOutlined className="text-2xl " />
             수정
           </div>
           <div
             onClick={handleDeleteComment}
-            className=" text-sm font-medium hover:font-black cursor-pointer transition-transform duration-300 ease-in-out hover:scale-105 hover:text-black"
+            className=" text-sm text-stone-700 font-medium hover:font-black cursor-pointer transition-transform duration-300 ease-in-out hover:scale-[1.01] hover:text-black"
           >
             <DeleteOutlined className="text-2xl " />
             삭제

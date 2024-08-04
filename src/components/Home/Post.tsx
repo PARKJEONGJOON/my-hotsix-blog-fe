@@ -25,13 +25,16 @@ const Post = ({
     <div className="w-postWidth h-postHeight border-solid border-2 border-gray rounded-2xl flex flex-row px-8 pt-2 pb-3 space-x-12">
       <div className="w-postInnerWidth mt-0">
         <div className="flex flex-row items-center justify-between">
-          <p className="text-regular font-MangoBold mb-2 text-ellipsis overflow-hidden line-clamp-1">
+          <p className="text-xl text-stone-700 font-medium mb-2 text-ellipsis overflow-hidden line-clamp-1">
             {title}
           </p>
           <div className="flex flex-col mt-0 gap-0">
             <div className="flex flex-row my-0">
               <TiHeartOutline className="w-6 h-6 text-xl" />
-              <p className="text-small ml-1"> {likeCount}</p>
+              <p className="text-small text-stone-700 font-medium ml-1">
+                {' '}
+                {likeCount}
+              </p>
             </div>
             {/* <div className="flex flex-row">
               <CommentOutlined className="w-6 h-6 text-xl" />
@@ -48,7 +51,7 @@ const Post = ({
             )}
           </div>
         </div>
-        <p className="text-small font-MangoRegular text-ellipsis overflow-hidden line-clamp-3">
+        <p className="text-base text-stone-700 font-medium text-ellipsis overflow-hidden line-clamp-3">
           {content}
         </p>
       </div>

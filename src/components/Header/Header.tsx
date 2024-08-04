@@ -36,7 +36,7 @@ const Header = ({ userName = 'Hotsix' }: Props) => {
 
   return (
     <header className="w-full py-[6px] border-b-1 border-skyblue shadow  flex justify-between items-center whitespace-nowrap">
-      <div className="ml-14 text-3xl text-darkblue bold">
+      <div className="ml-14 text-2xl text-blue-900">
         <Link to="/">{userName}'s Blog</Link>
       </div>
       {isLoggedIn ? (
@@ -45,11 +45,11 @@ const Header = ({ userName = 'Hotsix' }: Props) => {
             <img src={search} className="w-9 h-9" />
           </Link>
 
-          <button className=" text-sm p-2 border-solid border-2 border-darkblue rounded-[12px] text-darkblue font-MangoRegular">
+          <button className=" text-sm p-2 border-solid border-[1.5px] border-darkblue rounded-[12px] text-darkblue font-MangoRegular">
             <Link to={`/myblog/${userData?.id}`}>내 블로그</Link>
           </button>
 
-          <button className=" text-sm p-1 border-solid border-2 border-darkblue rounded-[12px] text-darkblue font-MangoRegular">
+          <button className=" text-sm p-1 border-solid border-[1.5px] border-dark blue rounded-[12px] text-darkblue font-MangoRegular">
             <Link to="/post">새 글 작성</Link>
           </button>
 
@@ -62,7 +62,7 @@ const Header = ({ userName = 'Hotsix' }: Props) => {
           </Link>
 
           <button
-            className="text-darkblue text-regular font-MangoRegular text-sm mr-14"
+            className="text-blue-900 text-regular font-MangoRegular text-sm mr-14"
             onClick={() => logoutMutate()}
           >
             로그아웃
@@ -70,7 +70,7 @@ const Header = ({ userName = 'Hotsix' }: Props) => {
         </div>
       ) : (
         <button
-          className="text-darkblue text-regular font-MangoRegular text-sm mr-14"
+          className="text-blue-900 text-regular font-MangoRegular text-sm mr-14"
           onClick={() => navigate('/login')}
         >
           로그인

@@ -61,7 +61,7 @@ const PostDetail = () => {
           comments.length > 0 ? (
             comments
               .slice()
-              .reverse()
+
               .map((coment: CommentData) => (
                 <Comment
                   key={coment.id}
