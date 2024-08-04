@@ -34,9 +34,9 @@ const Header = ({ userName = 'Hotsix' }: Props) => {
       navigate('/login');
     },
   });
-  // useEffect(() => {
-  //   if (!userData) navigate('/login');
-  // }, [userData]);
+  if (error) {
+    setIsLoggedIn(false);
+  }
 
   return (
     <header className="w-full py-[6px] border-b-1 border-skyblue shadow  flex justify-between items-center whitespace-nowrap">
