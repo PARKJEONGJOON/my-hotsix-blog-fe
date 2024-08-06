@@ -15,7 +15,7 @@
   - Zustand
     
 - 페이지 스타일링
-
+  - styled-component
   - TailwindCSS
 
 - etc
@@ -32,8 +32,6 @@ main
 develop (default)
 
 feature
-
-release: 배포 준비 단계
 
 hotfix: 배포 후 문제 수정
 ```
