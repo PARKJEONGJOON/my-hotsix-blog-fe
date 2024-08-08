@@ -49,5 +49,6 @@ hotfix: 배포 후 문제 수정
 | setting  | 빌드수행, 패키지 설치, 환경 설정 수정 등                      |
 | docs     | 주석 추가 및 삭제, readme 작성                                |
 
+--- 
 
 https://hotsix-blog.vercel.app/
