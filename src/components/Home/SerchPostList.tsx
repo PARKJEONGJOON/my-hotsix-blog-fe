@@ -50,12 +50,11 @@ const SerchPostList: React.FC = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
-  if (status === 'pending') {
-    return <div>Loading...</div>;
-  }
-
   if (status === 'error') {
     return <div>Error: {error.message}</div>;
+  }
+  if (status === 'pending') {
+    return <div>Loading...</div>;
   }
 
   return (

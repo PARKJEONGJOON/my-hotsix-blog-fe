@@ -34,9 +34,6 @@ const Header = ({ userName = 'Hotsix' }: Props) => {
       navigate('/login');
     },
   });
-  if (error) {
-    setIsLoggedIn(false);
-  }
 
   return (
     <header className="w-full py-[6px] border-b-1 border-skyblue shadow  flex justify-between items-center whitespace-nowrap">
@@ -73,12 +70,18 @@ const Header = ({ userName = 'Hotsix' }: Props) => {
           </button>
         </div>
       ) : (
-        <button
-          className="text-blue-900 text-regular font-MangoRegular text-sm mr-14"
-          onClick={() => navigate('/login')}
-        >
-          로그인
-        </button>
+        <div className="w-120 h-15 pl-20 flex gap-4  ">
+          {' '}
+          <Link to="/search">
+            <img src={search} className="w-9 h-9" />
+          </Link>
+          <button
+            className="text-blue-900 text-regular font-MangoRegular text-sm mr-14"
+            onClick={() => navigate('/login')}
+          >
+            로그인
+          </button>
+        </div>
       )}
     </header>
   );
