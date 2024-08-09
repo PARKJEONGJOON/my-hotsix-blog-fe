@@ -15,7 +15,7 @@
   - Zustand
     
 - 페이지 스타일링
-
+  - styled-component
   - TailwindCSS
 
 - etc
@@ -33,8 +33,6 @@ develop (default)
 
 feature
 
-release: 배포 준비 단계
-
 hotfix: 배포 후 문제 수정
 ```
 
@@ -50,3 +48,7 @@ hotfix: 배포 후 문제 수정
 | style    | 세미 콜론 수정, 줄바꿈, css 변경 등 기능과 무관한 스타일 변경 |
 | setting  | 빌드수행, 패키지 설치, 환경 설정 수정 등                      |
 | docs     | 주석 추가 및 삭제, readme 작성                                |
+
+--- 
+
+https://hotsix-blog.vercel.app/
